@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@bashleigh/nest-config";
-import * as amqp from "amqplib";
+import { InjectAmqpConnection } from "./amqp";
 
 @Injectable()
 export default class RabbitMQService {
-  connection;
-  constructor(private readonly config: ConfigService) {}
+  constructor(@InjectAmqpConnection() amqp) {
+		
+  }
 }

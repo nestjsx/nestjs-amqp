@@ -1,6 +1,6 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import RabbitMQService from "./rabbitmq.service";
-import ConfigModule from "@bashleigh/nest-config/dist";
+import ConfigModule from "@bashleigh/nest-config";
 
 @Module({
   imports: [ConfigModule],
