@@ -13,5 +13,10 @@
     "amqplib": "^0.5.2",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
+  },
+  "scripts": {
+    "format": "prettier --write \"**/*.ts\"",
+    "test": "echo 'no tests'",
+    "prepublish": "rm -rf dist && tsc"
   }
 }
