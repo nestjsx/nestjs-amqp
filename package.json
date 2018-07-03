@@ -1,5 +1,5 @@
 {
-  "name": "@bashleigh/nestjs-rabbitmq",
+  "name": "@bashleigh/nestjs-amqp",
   "description": "RabbitMQ service for nestjs",
   "main": "dist/index.js",
   "version": "0.0.1",
