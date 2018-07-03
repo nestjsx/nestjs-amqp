@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "@types/node": "^10.5.1",
+    "prettier": "^1.13.7",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "@bashleigh/nest-config": "^0.1.4",
+    "@nestjs/common": "^5.0.1",
+    "amqplib": "^0.5.2",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.2.1"
+  }
+}
