@@ -1,7 +1,7 @@
 Nestjs AMQP
 ===
 
-An amqp connection for nestjs
+An amqp connection service for nestjs
 
 ## Install
 
@@ -10,3 +10,5 @@ An amqp connection for nestjs
 ## TODO 
 
 - [] Manage multiple connections
+- [] Add configuration data
+- [] Add locallaised config via inject or however nestjs prefers 
