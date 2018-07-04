@@ -38,4 +38,10 @@ export default class AMQPModule {
       exports: providers
     };
   }
+
+  static forFeature(): DynamicModule {
+    return {
+      module: AMQPModule,
+    };
+  }
 }
