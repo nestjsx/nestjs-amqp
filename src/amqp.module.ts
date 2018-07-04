@@ -11,21 +11,21 @@ export default class AMQPModule {
   static forRoot(
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
-    const connections = [];
+    let connections = [];
     const providers = [];
+
     if (options instanceof Array) {
-      connections.concat(options);
+      connections = connections.concat(options);
     } else if (options) {
-      connections.concat([options]);
+      connections.push(options);
     } else {
       providers.push(AmqpConnection);
     }
+
     if (connections.length > 0)
       connections.map((ops, key) =>
         providers.push(createConnectionProvider(key, ops))
       );
-
-    console.log("providers", providers);
 
     return {
       module: AMQPModule,
