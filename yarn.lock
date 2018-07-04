@@ -61,7 +61,7 @@ bitsyntax@~0.0.4:
   dependencies:
     buffer-more-ints "0.0.2"
 
-bluebird@^3.4.6:
+bluebird@^3.4.6, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 

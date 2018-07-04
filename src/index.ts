@@ -1,5 +1,5 @@
-import RabbitMQModule from "./rabbit.module";
-import RabbitMQService from "./rabbitmq.service";
+import AMQPModule from "./amqp.module";
+import { InjectAmqpConnection, } from "./decorators";
 
-export default RabbitMQModule;
-export { RabbitMQService };
+export default AMQPModule;
+export { InjectAmqpConnection };

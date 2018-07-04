@@ -1,8 +1,9 @@
-import Connection from './connection';
-import InjectAmqpConnection from './decorator';
-
-export default Connection;
+import createConnectionProvider from './createConnectionProvider';
+import AmqpConnection from './connection';
+import resolveAmqpUrl from './resolveAmqlUrl';
 
 export {
-    InjectAmqpConnection,
+    createConnectionProvider,
+    AmqpConnection,
+    resolveAmqpUrl,
 };
