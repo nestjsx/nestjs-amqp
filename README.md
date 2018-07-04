@@ -13,9 +13,9 @@ An amqp connection service for nestjs.
 - [x] Add configuration data
 - [x] Add locallaised config via inject or however nestjs prefers 
 - [ ] Close connection on termination
-- [ ] Retry connection 
+- [ ] Retry connection on failure
 - [ ] Make documentation in readme easier to follow
-
+- [ ] Add examples
 
 ```javascript
 import {
@@ -109,7 +109,7 @@ async function bootstrap() {
   const app = await NestFactory.create(QueueModule);
   const event = app.get(MyAmqpService);
 
-  setInterval(async () => await event.listen(), 500);
+  await event.listen();
 
 }
 bootstrap();
