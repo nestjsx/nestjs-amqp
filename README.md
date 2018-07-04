@@ -1,7 +1,7 @@
 Nestjs AMQP
 ===
 
-An amqp connection service for nestjs
+An amqp connection service for nestjs.
 
 ## Install
 
@@ -14,6 +14,8 @@ An amqp connection service for nestjs
 - [x] Add locallaised config via inject or however nestjs prefers 
 - [ ] Close connection on termination
 - [ ] Retry connection 
+- [ ] Make documentation in readme easier to follow
+
 
 ```javascript
 import {
@@ -58,3 +60,61 @@ export default TestService {
 }
 ```
 > Use InjectAmqpConnection without a parameter for default connection
+
+## Future implementation
+
+So far this package manages multiple AMQP connections using the nestjs container and inject them into other providers.  
+Alternatively I'd like to implement something like this:
+
+```javascript
+import {
+    Injectable,
+} from '@nestjs/common';
+import {
+    AmqpConnection,
+    Consume,
+    Publish,
+    Message,
+} from '@bashleigh/nestjs-amqp';
+
+@Injectable()
+@AmqpConnection()
+export default class MyAmqpService {
+   
+    @Consume("queue_name", {
+        noAck: true,
+    })
+    async listen(@Message message) {
+        console.log('Message received', message);
+        
+        //send a message back
+        this.publish();
+    }
+
+    @Publish("queue_name")
+    async publish() {
+        return "Send this to 'queue queue_name'";
+    }
+}
+```
+
+Then using executable context 
+
+```javascript 
+
+import { NestFactory } from '@nestjs/core';
+import QueueModule, { MyAmqpService } from './queue';
+
+async function bootstrap() {
+  const app = await NestFactory.create(QueueModule);
+  const event = app.get(MyAmqpService);
+
+  setInterval(async () => await event.listen(), 500);
+
+}
+bootstrap();
+
+process.stdin.resume();
+```
+
+Or something similar to the above is what I'd like to implement
