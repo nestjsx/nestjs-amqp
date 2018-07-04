@@ -1,17 +1,16 @@
 import { Module, DynamicModule, Global } from "@nestjs/common";
 import ConfigModule from "@bashleigh/nest-config";
 import { AmqpConnectionOptions } from "./interfaces";
-import {
-  AmqpConnection,
-  createConnectionProvider,
-} from './amqp';
+import { AmqpConnection, createConnectionProvider } from "./amqp";
 
 @Global()
 @Module({
   imports: [ConfigModule]
 })
 export default class AMQPModule {
-  static forRoot(options?: AmqpConnectionOptions[] | AmqpConnectionOptions): DynamicModule {
+  static forRoot(
+    options?: AmqpConnectionOptions[] | AmqpConnectionOptions
+  ): DynamicModule {
     const connections = [];
     const providers = [];
     if (options instanceof Array) {
@@ -21,13 +20,17 @@ export default class AMQPModule {
     } else {
       providers.push(AmqpConnection);
     }
-    if (connections.length > 0) 
-      connections.map((ops, key) => providers.push(createConnectionProvider(key, ops)));
+    if (connections.length > 0)
+      connections.map((ops, key) =>
+        providers.push(createConnectionProvider(key, ops))
+      );
+
+    console.log("providers", providers);
 
     return {
       module: AMQPModule,
       providers: providers,
-      exports: providers,
-    }
+      exports: providers
+    };
   }
 }

@@ -1,5 +1,3 @@
-import InjectAmqpConnection from './injectampqconnection.decorator';
+import InjectAmqpConnection from "./injectampqconnection.decorator";
 
-export {
-    InjectAmqpConnection,
-};
+export { InjectAmqpConnection };

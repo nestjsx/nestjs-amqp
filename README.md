@@ -17,7 +17,7 @@ An amqp connection service for nestjs
 
 ```javascript
 @module({
-    imports: [AmqpModule.forRoot([
+    imports: [ConfigModule, AmqpModule.forRoot([
         {
             host: 'amqp://test:test@localhost',
         }, 
@@ -28,7 +28,7 @@ An amqp connection service for nestjs
             ssl: true,
             name: 'test',
         }
-    ])],
+    ]), TestService],
 })
 export default class TestModule {
 
