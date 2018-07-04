@@ -1,6 +1,6 @@
 export default interface AmqpConnectionOptions {
   host: string;
-  port?: number,
+  port?: number;
   username?: string;
   password?: string;
   ssl?: boolean;
