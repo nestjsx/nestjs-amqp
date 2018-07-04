@@ -22,10 +22,15 @@ export default class AMQPModule {
       providers.push(AmqpConnection);
     }
 
-    if (connections.length > 0)
-      connections.map((ops, key) =>
-        providers.push(createConnectionProvider(key, ops))
-      );
+    if (connections.length > 0) {
+      if (connections.length === 1) {
+        providers.push(createConnectionProvider('default', options));
+      } else {
+        connections.map((ops, key) =>
+          providers.push(createConnectionProvider(key, ops))
+        );
+      }
+    }
 
     return {
       module: AMQPModule,
