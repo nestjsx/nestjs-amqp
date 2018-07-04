@@ -24,7 +24,7 @@ export default class AMQPModule {
 
     if (connections.length > 0) {
       if (connections.length === 1) {
-        providers.push(createConnectionProvider('default', options));
+        providers.push(createConnectionProvider('default', connections[0]));
       } else {
         connections.map((ops, key) =>
           providers.push(createConnectionProvider(key, ops))

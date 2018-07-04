@@ -34,7 +34,7 @@ import ConfigModule from '@bashleigh/nest-config';
             ssl: true,
             name: 'test',
         }
-    ]), TestService],
+    ])],
 })
 export default class TestModule {
 }
@@ -42,6 +42,13 @@ export default class TestModule {
 > Alternatively use the env method `AMQP_URL=amqp://test@test:localhost:5672`
 
 ```javascript
+import {
+    Injectable,
+} from '@nestjs/common';
+import {
+    InjectAmqpConnection,
+} from '@bashleigh/nestjs-amqp';
+
 @Injectable()
 export default TestService {
     constructor(
