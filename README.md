@@ -12,8 +12,8 @@ An amqp connection service for nestjs
 - [x] Manage multiple connections
 - [x] Add configuration data
 - [x] Add locallaised config via inject or however nestjs prefers 
-- [] Close connection on termination
-- [] Retry connection 
+- [ ] Close connection on termination
+- [ ] Retry connection 
 
 ```javascript
 import {
