@@ -1,9 +1,12 @@
 {
   "name": "@bashleigh/nestjs-amqp",
   "description": "RabbitMQ service for nestjs",
-  "keywords": ["nestjs", "amqp"],
+  "keywords": [
+    "nestjs",
+    "amqp"
+  ],
   "main": "dist/index.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "devDependencies": {
     "@types/es6-promise": "^3.3.0",
