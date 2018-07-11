@@ -1,2 +1,4 @@
 /src
 tsconfig.json
+docker-compose.yml
+.travis.yml
