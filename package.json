@@ -13,6 +13,7 @@
     "@nestjs/testing": "^5.1.0",
     "@types/es6-promise": "^3.3.0",
     "@types/node": "^10.5.1",
+    "coveralls": "^3.0.2",
     "jest": "^23.4.0",
     "prettier": "^1.13.7",
     "ts-jest": "^23.0.0",
@@ -26,9 +27,12 @@
     "rxjs": "^6.2.1"
   },
   "scripts": {
-    "format": "prettier --write \"**/*.ts\"",
+    "build": "rm -rf ./dist && tsc",
+    "coverage": "jest --coverage",
+    "coveralls": "yarn run coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest",
-    "prepublish": "rm -rf dist && tsc"
+    "format": "prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
+    "prepublish": "npm run format && npm run build"
   },
   "repository": {
     "type": "git",
