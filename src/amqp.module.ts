@@ -12,8 +12,8 @@ export default class AMQPModule {
 
   constructor(@InjectConfig() private readonly config) {}
 
-  configure() {
-    this.config.merge(path.join(__dirname, '**/*.config.{ts,js}'));
+  async configure() {
+    await this.config.merge(path.join(__dirname, '**/*.config.{ts,js}'));
   }
 
   static forRoot(
