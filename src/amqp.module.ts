@@ -1,5 +1,5 @@
 import { Module, DynamicModule, Global } from "@nestjs/common";
-import ConfigModule from "@bashleigh/nest-config";
+import { ConfigModule } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
 import { AmqpConnection, createConnectionProvider } from "./amqp";
 

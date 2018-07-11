@@ -15,9 +15,9 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "@bashleigh/nest-config": "^0.1.4",
     "@nestjs/common": "^5.0.1",
     "amqplib": "^0.5.2",
+    "nestjs-config": "^1.2.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
   },

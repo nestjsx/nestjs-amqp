@@ -1,5 +1,5 @@
 import * as amqp from "amqplib";
-import { ConfigService } from "@bashleigh/nest-config";
+import { ConfigService } from "nestjs-config";
 
 const amqpConnection = {
   provide: "amqpConnection_default",
