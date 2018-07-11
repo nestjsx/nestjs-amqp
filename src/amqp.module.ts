@@ -35,13 +35,13 @@ export default class AMQPModule {
     return {
       module: AMQPModule,
       providers: providers,
-      exports: providers
+      exports: providers,
     };
   }
 
   static forFeature(): DynamicModule {
     return {
-      module: AMQPModule
+      module: AMQPModule,
     };
   }
 }
