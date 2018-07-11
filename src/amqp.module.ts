@@ -1,13 +1,21 @@
 import { Module, DynamicModule, Global } from "@nestjs/common";
-import { ConfigModule } from "nestjs-config";
+import { InjectConfig } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
 import { AmqpConnection, createConnectionProvider } from "./amqp";
+import * as path from 'path';
 
 @Global()
 @Module({
-  imports: [ConfigModule]
+  imports: []
 })
 export default class AMQPModule {
+
+  constructor(@InjectConfig() private readonly config) {}
+
+  configure() {
+    this.config.merge(path.join(__dirname, '**/*.config.{ts,js}'));
+  }
+
   static forRoot(
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
