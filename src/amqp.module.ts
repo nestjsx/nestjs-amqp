@@ -2,12 +2,13 @@ import { Module, DynamicModule } from "@nestjs/common";
 import { ConfigModule } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
 import { DefaultConnection, createConnectionProvider } from "./amqp";
+import * as path from "path";
 
 @Module({})
 export default class AMQPModule {
   static forRoot(
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
-  ) {
+  ): DynamicModule {
     let connections = [];
     const providers = [];
 
@@ -31,15 +32,15 @@ export default class AMQPModule {
 
     return {
       module: AMQPModule,
-      imports: [ConfigModule.load()],
+      imports: [ConfigModule],
       providers: providers,
-      exports: providers,
+      exports: providers
     };
   }
 
   static forFeature(): DynamicModule {
     return {
-      module: AMQPModule,
+      module: AMQPModule
     };
   }
 }
