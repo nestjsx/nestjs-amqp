@@ -9,21 +9,22 @@ describe("Instance amqp module", () => {
         ConfigModule.load(),
         AmqpModule.forRoot([
           {
-            host: "amqp://localhost:15672"
+            host: "amqp://localhost:5672"
           },
           {
             host: "localhost",
-            port: 15672,
+            port: 5672,
             name: "test"
           }
         ])
       ]
     }).compile();
 
-    const connection1 = module.get("AmqpConnection_1");
-    const connectionTest = module.get("AmqpConnection_test");
+    const connection1 = module.get<any>("amqpConnection_0");
+    const connectionTest = module.get<any>("amqpConnection_test");
 
-    console.log("connection", connection1, connectionTest);
+    expect(connection1).toBeTruthy();
+    expect(connectionTest).toBeTruthy();
   });
 
   it("Load module with singular connection", async () => {
@@ -31,14 +32,14 @@ describe("Instance amqp module", () => {
       imports: [
         ConfigModule.load(),
         AmqpModule.forRoot({
-          host: "amqp://localhost:15672"
+          host: "amqp://localhost:5672"
         })
       ]
     }).compile();
 
-    const connection = module.get("AmqpConnection_default");
+    const connection = module.get<any>("amqpConnection_default");
 
-    console.log("connection", connection);
+    expect(connection).toBeTruthy();
   });
 
   it("Load module using env", async () => {
@@ -46,8 +47,8 @@ describe("Instance amqp module", () => {
       imports: [ConfigModule.load(), AmqpModule.forRoot()]
     }).compile();
 
-    const connection = module.get("AmqpConnection_default");
+    const connection = module.get<any>("amqpConnection_default");
 
-    console.log("connection", connection);
+    expect(connection).toBeTruthy();
   });
 });
