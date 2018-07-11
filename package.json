@@ -1,6 +1,6 @@
 {
-  "name": "@bashleigh/nestjs-amqp",
-  "description": "RabbitMQ service for nestjs",
+  "name": "nestjs-amqp",
+  "description": "AMQP connection service for nestjs",
   "keywords": [
     "nestjs",
     "amqp"
@@ -28,6 +28,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bashleigh/nestjs-amqp.git"
+    "url": "https://github.com/nestjs-community/nestjs-amqp.git"
   }
 }
