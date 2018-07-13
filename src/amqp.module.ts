@@ -1,9 +1,9 @@
-import { Module, DynamicModule } from "@nestjs/common";
+import { Module, DynamicModule, Global } from "@nestjs/common";
 import { ConfigModule } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
 import { DefaultConnection, createConnectionProvider } from "./amqp";
-import * as path from "path";
 
+@Global()
 @Module({})
 export default class AMQPModule {
   static forRoot(
