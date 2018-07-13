@@ -20,6 +20,7 @@ In order to test first you need to start the rabbitmq container. We've provided 
 $ docker-compose up -d 
 $ yarn test
 ```
+> Navigate to localhost:15672 for rabbitmq manager, username and password are both `guest`
 
 ```javascript
 import {
