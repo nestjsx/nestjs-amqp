@@ -27,6 +27,9 @@ describe('Instance amqp module', () => {
 
     expect(connection1).toBeTruthy();
     expect(connectionTest).toBeTruthy();
+
+    connection1.close();
+    connectionTest.close();
   });
 
   it('Load module with singular connection', async () => {
@@ -42,6 +45,7 @@ describe('Instance amqp module', () => {
     const connection = module.get<any>('amqpConnection_default');
 
     expect(connection).toBeTruthy();
+    connection.close();
   });
 
   it('Load module using env', async () => {
@@ -63,6 +67,10 @@ describe('Instance amqp module', () => {
         hasConnection() {
             return this.connection;
         }
+
+        closeConnection() {
+            this.connection.close();
+        }
     }
 
     @Module({
@@ -81,5 +89,6 @@ describe('Instance amqp module', () => {
         ],
     }).compile();
     expect(module.select(SubModule).get<Provider>(Provider).hasConnection()).toBeTruthy();
+    module.select(SubModule).get<Provider>(Provider).closeConnection();
   });
 });
