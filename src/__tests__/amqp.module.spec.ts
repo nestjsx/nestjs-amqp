@@ -3,6 +3,7 @@ import AmqpModule from './../amqp.module';
 import { ConfigModule } from 'nestjs-config';
 import { Injectable, Module } from '@nestjs/common';
 import { InjectAmqpConnection } from './../decorators';
+var ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
 
 describe('Instance amqp module', () => {
   it('Load module with an array of connection', async () => {
@@ -25,8 +26,8 @@ describe('Instance amqp module', () => {
     const connection1 = module.get<any>('amqpConnection_0');
     const connectionTest = module.get<any>('amqpConnection_test');
 
-    expect(connection1).toBeTruthy();
-    expect(connectionTest).toBeTruthy();
+    expect(connection1).toBeInstanceOf(ChannelModel);
+    expect(connectionTest).toBeInstanceOf(ChannelModel);
 
     connection1.close();
     connectionTest.close();
@@ -44,7 +45,7 @@ describe('Instance amqp module', () => {
 
     const connection = module.get<any>('amqpConnection_default');
 
-    expect(connection).toBeTruthy();
+    expect(connection).toBeInstanceOf(ChannelModel);
     connection.close();
   });
 
@@ -55,7 +56,7 @@ describe('Instance amqp module', () => {
 
     const connection = module.get<any>('amqpConnection_default');
 
-    expect(connection).toBeTruthy();
+    expect(connection).toBeInstanceOf(ChannelModel);
     connection.close();
   });
 
@@ -93,7 +94,7 @@ describe('Instance amqp module', () => {
         .select(SubModule)
         .get<Provider>(Provider)
         .hasConnection(),
-    ).toBeTruthy();
+    ).toBeInstanceOf(ChannelModel);
     module
       .select(SubModule)
       .get<Provider>(Provider)
