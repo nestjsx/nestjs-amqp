@@ -4,6 +4,7 @@ import { ConfigModule } from 'nestjs-config';
 import { Injectable, Module } from '@nestjs/common';
 import { InjectAmqpConnection } from './../decorators';
 var ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
+import * as path from 'path';
 
 describe('Instance amqp module', () => {
   it('Load module with an array of connection', async () => {
@@ -51,7 +52,13 @@ describe('Instance amqp module', () => {
 
   it('Load module using env', async () => {
     const module = await Test.createTestingModule({
-      imports: [ConfigModule.load(), AmqpModule.forRoot()],
+      imports: [
+        ConfigModule.load(
+          path.resolve(__dirname, '__stubs__', 'config', '**/*.ts'),
+          { path: path.resolve(__dirname, '__stubs__', '.env') },
+        ),
+        AmqpModule.forRoot(),
+      ],
     }).compile();
 
     const connection = module.get<any>('amqpConnection_default');

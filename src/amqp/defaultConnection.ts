@@ -4,8 +4,7 @@ import { ConfigService } from 'nestjs-config';
 const DefaultConnection = {
   provide: 'amqpConnection_default',
   useFactory: async (config: ConfigService) => {
-    //TODO add configservice here
-    return await amqp.connect();
+    return await amqp.connect(config.get('amqp.host'));
   },
   inject: [ConfigService],
 };
