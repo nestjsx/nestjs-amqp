@@ -56,6 +56,7 @@ describe('Instance amqp module', () => {
     const connection = module.get<any>('amqpConnection_default');
 
     expect(connection).toBeTruthy();
+    connection.close();
   });
 
   it('Load module within an additional module using forFeature', async () => {
