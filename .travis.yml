@@ -9,6 +9,7 @@ services:
 before_install:
   - npm i -g npm@latest
   - npm i -g yarn
+  - docker-compose up -d --build --force-recreate
 install:
   - yarn
 script:
