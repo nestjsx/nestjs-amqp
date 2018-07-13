@@ -1,8 +1,8 @@
 import { Test } from '@nestjs/testing';
 import AmqpModule from './../amqp.module';
 import { ConfigModule } from 'nestjs-config';
-import {Injectable, Module} from '@nestjs/common';
-import {InjectAmqpConnection} from './../decorators';
+import { Injectable, Module } from '@nestjs/common';
+import { InjectAmqpConnection } from './../decorators';
 
 describe('Instance amqp module', () => {
   it('Load module with an array of connection', async () => {
@@ -60,36 +60,43 @@ describe('Instance amqp module', () => {
   });
 
   it('Load module within an additional module using forFeature', async () => {
-    
     @Injectable()
     class Provider {
-        constructor(@InjectAmqpConnection() private readonly connection) {}
+      constructor(@InjectAmqpConnection() private readonly connection) {}
 
-        hasConnection() {
-            return this.connection;
-        }
+      hasConnection() {
+        return this.connection;
+      }
 
-        closeConnection() {
-            this.connection.close();
-        }
+      closeConnection() {
+        this.connection.close();
+      }
     }
 
     @Module({
-        imports: [AmqpModule.forFeature()],
-        providers: [Provider],
+      imports: [AmqpModule.forFeature()],
+      providers: [Provider],
     })
     class SubModule {}
 
     const module = await Test.createTestingModule({
-        imports: [
-            ConfigModule.load(), 
-            AmqpModule.forRoot({
-                host: 'amqp://localhost:5672',
-            }),
-            SubModule,
-        ],
+      imports: [
+        ConfigModule.load(),
+        AmqpModule.forRoot({
+          host: 'amqp://localhost:5672',
+        }),
+        SubModule,
+      ],
     }).compile();
-    expect(module.select(SubModule).get<Provider>(Provider).hasConnection()).toBeTruthy();
-    module.select(SubModule).get<Provider>(Provider).closeConnection();
+    expect(
+      module
+        .select(SubModule)
+        .get<Provider>(Provider)
+        .hasConnection(),
+    ).toBeTruthy();
+    module
+      .select(SubModule)
+      .get<Provider>(Provider)
+      .closeConnection();
   });
 });
