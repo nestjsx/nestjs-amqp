@@ -1,27 +1,32 @@
 Nestjs AMQP
 ===
 
+[![Build Status](https://travis-ci.org/nestjs-community/nestjs-amqp.svg?branch=master)](https://travis-ci.org/nestjs-community/nestjs-amqp)
+[![GitHub version](https://img.shields.io/npm/v/nestjs-config.svg)](https://www.npmjs.com/package/nestjs-amqp)
+[![GitHub license](https://img.shields.io/github/license/nestjs-community/nestjs-amqp.svg)](https://github.com/nestjs-community/nestjs-amqp/blob/master/LICENSE)
+[![Coverage Status](https://coveralls.io/repos/github/nestjs-community/nestjs-amqp/badge.svg?branch=master)](https://coveralls.io/github/nestjs-community/nestjs-amqp?branch=master)
+
 An amqp connection service for nestjs.
 
 ## Install
 
+```bash
+$ yarn add nestjs-amqp
+```
+
 ## tests
-
-## TODO 
-
-- [x] Manage multiple connections
-- [x] Add configuration data
-- [x] Add locallaised config via inject or however nestjs prefers 
-- [ ] Close connection on termination
-- [ ] Retry connection on failure
-- [ ] Make documentation in readme easier to follow
-- [ ] Add examples
+In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
+```bash
+$ docker-compose up -d 
+$ yarn test
+```
 
 ```javascript
 import {
     Module,
 } from '@nestjs/common';
-import ConfigModule from '@bashleigh/nest-config';
+import {ConfigModule} from 'nestjs-config';
+import {AmqpModule} from 'nestjs-amqp';
 
 @module({
     imports: [ConfigModule, AmqpModule.forRoot([
@@ -38,7 +43,7 @@ import ConfigModule from '@bashleigh/nest-config';
         }
     ])],
 })
-export default class TestModule {
+export default class ExecutionModule {
 }
 ```
 > Alternatively use the env method `AMQP_URL=amqp://test@test:localhost:5672`
@@ -49,13 +54,13 @@ import {
 } from '@nestjs/common';
 import {
     InjectAmqpConnection,
-} from '@bashleigh/nestjs-amqp';
+} from 'nestjs-amqp';
 
 @Injectable()
 export default TestService {
     constructor(
         @InjectAmqpConnection('test') private readonly connectionTest, //gets connection with name 'test' defined in module
-        @InjectAmqpConnection(1) private readonly connection1, //gets first defined connection without a name
+        @InjectAmqpConnection(0) private readonly connection0, //gets first defined connection without a name
     ) {}
 }
 ```
@@ -75,7 +80,7 @@ import {
     Consume,
     Publish,
     Message,
-} from '@bashleigh/nestjs-amqp';
+} from 'nestjs-amqp';
 
 @Injectable()
 @AmqpConnection()
