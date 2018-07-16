@@ -2,6 +2,7 @@ import { Module, DynamicModule, Global } from "@nestjs/common";
 import { ConfigModule } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
 import { DefaultConnection, createConnectionProvider } from "./amqp";
+import AmqpConfigProvider from './amqp.config.provider';
 
 @Global()
 @Module({})
@@ -10,7 +11,7 @@ export default class AMQPModule {
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
     let connections = [];
-    const providers = [];
+    const providers = [AmqpConfigProvider];
 
     if (options instanceof Array) {
       connections = connections.concat(options);

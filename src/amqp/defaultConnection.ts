@@ -1,11 +1,11 @@
 import * as amqp from 'amqplib';
-import { ConfigService } from 'nestjs-config';
+import resolveAmqpUrl from './resolveAmqlUrl';
 
 const DefaultConnection = {
   provide: 'amqpConnection_default',
-  useFactory: async (config: ConfigService) => {
-    return await amqp.connect(config.get('amqp.host'));
+  useFactory: async (config) => {
+    return await amqp.connect(resolveAmqpUrl(config));
   },
-  inject: [ConfigService],
+  inject: ['AmqpConfigProvider'],
 };
 export default DefaultConnection;
