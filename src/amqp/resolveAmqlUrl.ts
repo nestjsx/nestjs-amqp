@@ -1,8 +1,6 @@
 import { AmqpConnectionOptions } from './../interfaces';
 
 export default function resolveAmqpUrl(options: AmqpConnectionOptions): string {
-  //TODO start of string condition
-
   for (const i in options)
     if (typeof options[i] === 'undefined') delete options[i];
 
@@ -10,9 +8,9 @@ export default function resolveAmqpUrl(options: AmqpConnectionOptions): string {
   let url =
     (options.hasOwnProperty('ssl') && options.ssl ? 'amqps' : 'amqp') + '://';
 
-  if (options.hasOwnProperty('username') && options.username)
+  if (options.hasOwnProperty('username'))
     url += options.username;
-  if (options.hasOwnProperty('password') && options.password)
+  if (options.hasOwnProperty('password'))
     url += `:${options.password}`;
   if (options.hasOwnProperty('username') || options.hasOwnProperty('password'))
     url += '@';
