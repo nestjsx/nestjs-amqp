@@ -2,7 +2,7 @@ Nestjs AMQP
 ===
 
 [![Build Status](https://travis-ci.org/nestjs-community/nestjs-amqp.svg?branch=master)](https://travis-ci.org/nestjs-community/nestjs-amqp)
-[![GitHub version](https://img.shields.io/npm/v/nestjs-config.svg)](https://www.npmjs.com/package/nestjs-amqp)
+[![GitHub version](https://img.shields.io/npm/v/nestjs-amqp.svg)](https://www.npmjs.com/package/nestjs-amqp)
 [![GitHub license](https://img.shields.io/github/license/nestjs-community/nestjs-amqp.svg)](https://github.com/nestjs-community/nestjs-amqp/blob/master/LICENSE)
 [![Coverage Status](https://coveralls.io/repos/github/nestjs-community/nestjs-amqp/badge.svg?branch=master)](https://coveralls.io/github/nestjs-community/nestjs-amqp?branch=master)
 
