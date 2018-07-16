@@ -11,7 +11,7 @@ export default class AMQPModule {
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
     let connections = [];
-    const providers = [AmqpConfigProvider];
+    const providers = [];
 
     if (options instanceof Array) {
       connections = connections.concat(options);
@@ -34,7 +34,7 @@ export default class AMQPModule {
     return {
       module: AMQPModule,
       imports: [ConfigModule],
-      providers: providers,
+      providers: [AmqpConfigProvider, ...providers],
       exports: providers
     };
   }
