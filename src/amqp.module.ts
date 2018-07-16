@@ -1,21 +1,11 @@
 import { Module, DynamicModule, Global } from "@nestjs/common";
-import { InjectConfig } from "nestjs-config";
+import { ConfigModule } from "nestjs-config";
 import { AmqpConnectionOptions } from "./interfaces";
-import { AmqpConnection, createConnectionProvider } from "./amqp";
-import * as path from 'path';
+import { DefaultConnection, createConnectionProvider } from "./amqp";
 
 @Global()
-@Module({
-  imports: []
-})
+@Module({})
 export default class AMQPModule {
-
-  constructor(@InjectConfig() private readonly config) {}
-
-  async configure() {
-    await this.config.merge(path.join(__dirname, '**/*.config.{ts,js}'));
-  }
-
   static forRoot(
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
@@ -27,7 +17,7 @@ export default class AMQPModule {
     } else if (options) {
       connections.push(options);
     } else {
-      providers.push(AmqpConnection);
+      providers.push(DefaultConnection);
     }
 
     if (connections.length > 0) {
@@ -42,14 +32,15 @@ export default class AMQPModule {
 
     return {
       module: AMQPModule,
+      imports: [ConfigModule],
       providers: providers,
-      exports: providers,
+      exports: providers
     };
   }
 
   static forFeature(): DynamicModule {
     return {
-      module: AMQPModule,
+      module: AMQPModule
     };
   }
 }

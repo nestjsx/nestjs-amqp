@@ -1,0 +1,17 @@
+sudo: required
+
+language: node_js
+node_js:
+  - "8"
+  - "9"
+services:
+  - docker
+before_install:
+  - npm i -g npm@latest
+  - npm i -g yarn
+  - docker-compose up -d --build --force-recreate
+install:
+  - yarn
+script:
+  - yarn run test
+after_success: yarn run coveralls
