@@ -39,4 +39,14 @@ describe('Amqp Url resolver', () => {
 
     expect(url).toBe('amqp://test@localhost:5672');
   });
+
+  it('Must return null with invalid config', () => {
+    const url = resolveAmqpUrl({
+      host: undefined,
+      username: undefined,
+      password: undefined,
+    });
+    
+    expect(url).toBe(null);
+  });
 });
