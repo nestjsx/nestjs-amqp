@@ -46,7 +46,7 @@ describe('Amqp Url resolver', () => {
       username: undefined,
       password: undefined,
     });
-    
+
     expect(url).toBe(null);
   });
 });
