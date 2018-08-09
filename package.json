@@ -9,6 +9,7 @@
   "version": "0.0.5",
   "license": "MIT",
   "devDependencies": {
+    "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
     "@nestjs/testing": "^5.1.0",
     "@types/es6-promise": "^3.3.0",
@@ -20,7 +21,6 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "@nestjs/common": "^5.0.1",
     "amqplib": "^0.5.2",
     "nestjs-config": "^1.2.0",
     "reflect-metadata": "^0.1.12",
