@@ -20,6 +20,9 @@
     "ts-jest": "^23.0.0",
     "typescript": "^2.9.2"
   },
+  "peerDependencies" : {
+    "@nestjs/common": "^5.1.0"
+  },
   "dependencies": {
     "amqplib": "^0.5.2",
     "nestjs-config": "^1.2.0",
