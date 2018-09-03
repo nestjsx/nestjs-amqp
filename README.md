@@ -14,55 +14,112 @@ An amqp connection service for nestjs.
 $ yarn add nestjs-amqp
 ```
 
+## Basic usage 
+
+```ts
+import {Module} from '@nestjs/common';
+import {AmqpModule} from 'nestjs-amqp';
+
+@Module({
+  imports: [AmqpModule.forRoot({
+    name: 'rabbitmq',
+    host: 'localhost',
+    port: 5672,
+    username: 'test',
+    password: 'test',
+  })],
+})
+export default AppModule {}
+
+```
+
+### Usage with nestjs-config
+
+```ts
+import {Module} from '@nestjs/common';
+import {AmqpModule} from 'nestjs-amqp';
+import {ConfigModule, ConfigService} from 'nestjs-config';
+import * as path from 'path';
+
+@Module({
+  imports: [
+    ConfigModule.load(path.resolve(__dirname, 'config', '**/*.ts')),
+    AmqpModule.forRootAsync({
+      useFactory: (config: ConfigService) => config.get('aqmp'),
+      inject: [ConfigService],
+    }),
+  ],
+})
+export default AppModule {}
+
+//src/config/amqp.ts
+export default {
+  name: 'rabbitmq',
+  host: process.env.AMQP_HOST,
+  port: process.env.AMQP_PORT,
+  username: process.env.USERNAME,
+  password: process.env.PASSWORD,
+}
+
+//alternatively you can use an array 
+export default [
+  {
+    name: 'rabbitmq',
+    host: process.env.AMQP_HOST,
+    port: process.env.AMQP_PORT,
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+  },
+  {
+    name: 'other_connection',
+    host: process.env.ANOTHER_CONNECTION,
+    port: process.env.ANOTHER_PORT,
+  },
+];
+```
+
 ## tests
 In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
+
 ```bash
 $ docker-compose up -d 
 $ yarn test
 ```
 > Navigate to localhost:15672 for rabbitmq manager, username and password are both `guest`
 
-```javascript
-import {
-    Module,
-} from '@nestjs/common';
-import {ConfigModule} from 'nestjs-config';
+```ts
+import {Module} from '@nestjs/common';
 import {AmqpModule} from 'nestjs-amqp';
 
 @module({
-    imports: [ConfigModule, AmqpModule.forRoot([
-        {
-            host: 'amqp://test:test@localhost',
-        }, 
-        {
-            username: 'test',
-            password: 'test',
-            host: 'localhost',
-            port: 5672,
-            ssl: true,
-            name: 'test',
-        }
-    ])],
+  imports: [AmqpModule.forRoot([
+    {
+      host: 'amqp://test:test@localhost',
+    }, 
+    {
+      username: 'test',
+      password: 'test',
+      host: 'localhost',
+      port: 5672,
+      ssl: true,
+      name: 'test',
+    }
+  ])],
 })
 export default class ExecutionModule {
 }
 ```
-> Alternatively use the env method `AMQP_URL=amqp://test@test:localhost:5672`
 
-```javascript
-import {
-    Injectable,
-} from '@nestjs/common';
-import {
-    InjectAmqpConnection,
-} from 'nestjs-amqp';
+```ts
+import {Injectable} from '@nestjs/common';
+import {InjectAmqpConnection} from 'nestjs-amqp';
 
 @Injectable()
 export default TestService {
-    constructor(
-        @InjectAmqpConnection('test') private readonly connectionTest, //gets connection with name 'test' defined in module
-        @InjectAmqpConnection(0) private readonly connection0, //gets first defined connection without a name
-    ) {}
+  constructor(
+    @InjectAmqpConnection('test') private readonly connectionTest, //gets connection with name 'test' defined in module
+    @InjectAmqpConnection(0) private readonly connection0, //gets first defined connection without a name
+  ) {}
 }
 ```
 > Use InjectAmqpConnection without a parameter for default connection
@@ -73,34 +130,32 @@ So far this package manages multiple AMQP connections using the nestjs container
 Alternatively I'd like to implement something like this:
 
 ```javascript
+import {Injectable} from '@nestjs/common';
 import {
-    Injectable,
-} from '@nestjs/common';
-import {
-    AmqpConnection,
-    Consume,
-    Publish,
-    Message,
+  AmqpConnection,
+  Consume,
+  Publish,
+  Message,
 } from 'nestjs-amqp';
 
 @Injectable()
 @AmqpConnection()
 export default class MyAmqpService {
    
-    @Consume("queue_name", {
-        noAck: true,
-    })
-    async listen(@Message message) {
-        console.log('Message received', message);
-        
-        //send a message back
-        this.publish();
-    }
+  @Consume("queue_name", {
+    noAck: true,
+  })
+  async listen(@Message message) {
+    console.log('Message received', message);
+    
+    //send a message back
+    this.publish();
+  }
 
-    @Publish("queue_name")
-    async publish() {
-        return "Send this to 'queue queue_name'";
-    }
+  @Publish("queue_name")
+  async publish() {
+    return "Send this to 'queue queue_name'";
+  }
 }
 ```
 

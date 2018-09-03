@@ -9,5 +9,7 @@ export interface AmqpConnectionOptions {
 
 export interface AmqpConnectionAsyncOptions {
   inject?: any[];
-  useFactory?: (...args: any[]) => Promise<AmqpConnectionOptions|AmqpConnectionAsyncOptions[]>;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<AmqpConnectionOptions | AmqpConnectionAsyncOptions[]>;
 }

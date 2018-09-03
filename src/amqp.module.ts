@@ -9,8 +9,8 @@ export default class AMQPModule {
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
 
-    const providersOptions = this.createOptionsProviders(options typeof Array ? options : [options]);
-  
+    const providersOptions = this.createOptionsProviders(Array.isArray(options) ? options : [options]);
+    const providers = this.createConnectionProviders(Array.isArray(options) ? options : [options]);
     
     return {
       module: AMQPModule,
@@ -18,7 +18,7 @@ export default class AMQPModule {
         ...providersOptions,
         ...providers,
       ],
-      exports: [providers],
+      exports: providers,
     };
   }
 
