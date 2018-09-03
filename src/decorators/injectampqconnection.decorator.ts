@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
+import createProviderToken from '../amqp/createProviderToken';
 
-const InjectAmqpConnection = (
-  connectionName: string = 'amqpConnection_default',
-) => Inject(connectionName);
-
-export default InjectAmqpConnection;
+export default function InjectAmqpConnection(
+  connectionName: string = 'default',
+){ 
+  return Inject(createProviderToken(connectionName));
+}

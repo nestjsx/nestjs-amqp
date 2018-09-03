@@ -1,5 +1,9 @@
 import createConnectionProvider from './createConnectionProvider';
-import DefaultConnection from './defaultConnection';
 import resolveAmqpUrl from './resolveAmqlUrl';
+import createConnectionOptionsProvider from './createConnectionOptionsProvider';
 
-export { createConnectionProvider, DefaultConnection, resolveAmqpUrl };
+export {
+  createConnectionProvider,
+  createConnectionOptionsProvider,
+  resolveAmqpUrl,
+};

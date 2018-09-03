@@ -1,47 +1,57 @@
-import { Module, DynamicModule, Global } from "@nestjs/common";
-import { ConfigModule } from "nestjs-config";
-import { AmqpConnectionOptions } from "./interfaces";
-import { DefaultConnection, createConnectionProvider } from "./amqp";
-import AmqpConfigProvider from './amqp.config.provider';
+import { Module, DynamicModule, Global, Provider } from "@nestjs/common";
+import { AmqpConnectionOptions, AmqpConnectionAsyncOptions } from "./interfaces";
+import { createConnectionOptionsProvider, createConnectionProvider } from "./amqp";
 
 @Global()
 @Module({})
 export default class AMQPModule {
-  static forRoot(
+  public static forRoot(
     options?: AmqpConnectionOptions[] | AmqpConnectionOptions
   ): DynamicModule {
-    let connections = [];
-    const providers = [];
 
-    if (options instanceof Array) {
-      connections = connections.concat(options);
-    } else if (options) {
-      connections.push(options);
-    } else {
-      providers.push(DefaultConnection);
-    }
-
-    if (connections.length > 0) {
-      if (connections.length === 1) {
-        providers.push(createConnectionProvider("default", connections[0]));
-      } else {
-        connections.map((ops, key) =>
-          providers.push(createConnectionProvider(key, ops))
-        );
-      }
-    }
-
+    const providersOptions = this.createOptionsProviders(options typeof Array ? options : [options]);
+  
+    
     return {
       module: AMQPModule,
-      imports: [ConfigModule],
-      providers: [AmqpConfigProvider, ...providers],
-      exports: providers
+      providers: [
+        ...providersOptions,
+        ...providers,
+      ],
+      exports: [providers],
     };
   }
 
-  static forFeature(): DynamicModule {
+  public static forRootAsync(options: AmqpConnectionAsyncOptions): DynamicModule {
     return {
-      module: AMQPModule
+      module: AMQPModule,
+      imports: [],
+      providers: [],
+      exports: [],
     };
+  }
+
+  public static forFeature(): DynamicModule {
+    return {
+      module: AMQPModule,
+    };
+  }
+
+  private static createOptionsProviders(options: AmqpConnectionOptions[]): Provider[] {
+    let providers = [];
+    options.forEach(option => {
+      providers.push(createConnectionOptionsProvider(option));
+    });
+
+    return providers;
+  }
+
+  private static createConnectionProviders(connections: AmqpConnectionOptions[]): Provider[] {
+    let providers = [];
+    connections.forEach(connection => {
+      providers.push(createConnectionProvider(connection));
+    });
+
+    return providers;
   }
 }

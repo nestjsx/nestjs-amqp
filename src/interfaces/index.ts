@@ -1,3 +1,1 @@
-import AmqpConnectionOptions from './amqpconnection-options.interface';
-
-export { AmqpConnectionOptions };
+export * from './amqpconnection-options.interface';

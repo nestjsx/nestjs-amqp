@@ -2602,11 +2602,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-nestjs-config@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/nestjs-config/-/nestjs-config-1.2.0.tgz#d2e6a47fa846843169c1d94413870ff7fccd56c5"
+nestjs-config@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/nestjs-config/-/nestjs-config-1.2.3.tgz#21237893c242cc155a57d78fb4ced73d1d6532a8"
   dependencies:
-    "@nestjs/common" "^5.1.0"
     dotenv "^6.0.0"
     glob "^7.1.2"
     lodash.get "^4.4.2"
@@ -3224,7 +3223,13 @@ rsvp@^3.3.3:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
 
-rxjs@^6.0.0, rxjs@^6.2.1:
+rxjs@^6.0.0:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.1.tgz#878a1a8c64b8a5da11dcf74b5033fe944cdafb84"
+  dependencies:
+    tslib "^1.9.0"
+
+rxjs@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.1.tgz#246cebec189a6cbc143a3ef9f62d6f4c91813ca1"
   dependencies:

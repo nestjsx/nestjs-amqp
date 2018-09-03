@@ -16,16 +16,16 @@
     "@types/node": "^10.5.1",
     "coveralls": "^3.0.2",
     "jest": "^23.4.0",
+    "nestjs-config": "^1.2.3",
     "prettier": "^1.13.7",
     "ts-jest": "^23.0.0",
     "typescript": "^2.9.2"
   },
-  "peerDependencies" : {
+  "peerDependencies": {
     "@nestjs/common": "^5.1.0"
   },
   "dependencies": {
     "amqplib": "^0.5.2",
-    "nestjs-config": "^1.2.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
   },
