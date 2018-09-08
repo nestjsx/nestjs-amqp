@@ -25,6 +25,7 @@
     "@nestjs/common": "^5.1.0"
   },
   "dependencies": {
+    "@types/jest": "^23.3.2",
     "amqplib": "^0.5.2",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"

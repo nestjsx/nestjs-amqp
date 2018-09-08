@@ -1,5 +1,5 @@
-import {Test, TestingModule} from '@nestjs/testing';
-import {AmqpModule} from './../index';
+import { Test, TestingModule } from '@nestjs/testing';
+import { AmqpModule } from './../index';
 import { createConnectionToken } from '../utils/create.tokens';
 import { Module } from '@nestjs/common';
 const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
@@ -7,9 +7,11 @@ const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
 describe('AmqpModule', () => {
   it('Instace Amqp', async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [AmqpModule.forRoot({
-        host: 'amqp://localhost:5672',
-      })],
+      imports: [
+        AmqpModule.forRoot({
+          host: 'amqp://localhost:5672',
+        }),
+      ],
     }).compile();
 
     const amqpModule = module.get(AmqpModule);
@@ -21,9 +23,11 @@ describe('AmqpModule', () => {
 
   it('Instace Amqp Connection provider', async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [AmqpModule.forRoot({
-        host: 'amqp://localhost:5672',
-      })],
+      imports: [
+        AmqpModule.forRoot({
+          host: 'amqp://localhost:5672',
+        }),
+      ],
     }).compile();
 
     const amqpConnection = module.get(createConnectionToken('default'));
@@ -79,7 +83,6 @@ describe('AmqpModule', () => {
   });
 
   it('Connection available in submodule', async () => {
-
     @Module({
       imports: [AmqpModule.forFeature()],
     })
@@ -94,7 +97,9 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
-    const provider = module.select<SubModule>(SubModule).get(createConnectionToken('default'));
+    const provider = module
+      .select<SubModule>(SubModule)
+      .get(createConnectionToken('default'));
 
     expect(provider).toBeInstanceOf(ChannelModel);
 

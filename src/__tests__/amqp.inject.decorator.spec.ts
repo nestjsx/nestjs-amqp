@@ -1,12 +1,11 @@
-import {Test, TestingModule} from '@nestjs/testing';
-import {Injectable} from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Injectable } from '@nestjs/common';
 import AmqpModule from '../amqp.module';
 import { InjectAmqpConnection } from '../decorators';
 const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
 
 describe('InjectAmqpConnection', () => {
   it('Connection should inject', async () => {
-
     @Injectable()
     class TestProvider {
       constructor(@InjectAmqpConnection() private readonly connection) {}
@@ -31,7 +30,6 @@ describe('InjectAmqpConnection', () => {
   });
 
   it('Connection should inject with name', async () => {
-
     @Injectable()
     class TestProvider {
       constructor(@InjectAmqpConnection('1') private readonly connection) {}

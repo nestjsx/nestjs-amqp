@@ -1,4 +1,7 @@
-import { AMQP_CONNECTION_PROVIDER, AMQP_OPTIONS_PROVIDER } from "../amqp.constants";
+import {
+  AMQP_CONNECTION_PROVIDER,
+  AMQP_OPTIONS_PROVIDER,
+} from '../amqp.constants';
 
 export function createOptionsToken(name: string): string {
   return `${AMQP_OPTIONS_PROVIDER}_${name}`;
