@@ -1,57 +1,59 @@
-import { Module, DynamicModule, Global, Provider } from "@nestjs/common";
-import { AmqpConnectionOptions, AmqpConnectionAsyncOptions } from "./interfaces";
-import { createConnectionOptionsProvider, createConnectionProvider } from "./amqp";
+import {Module, DynamicModule, Provider} from '@nestjs/common';
+import { AmqpOptionsInterface } from './interfaces';
+import { createOptionsToken, createConnectionToken } from './utils/create.tokens';
+import * as amqp from 'amqplib';
 
-@Global()
 @Module({})
-export default class AMQPModule {
-  public static forRoot(
-    options?: AmqpConnectionOptions[] | AmqpConnectionOptions
-  ): DynamicModule {
+export default class AmqpModule {
 
-    const providersOptions = this.createOptionsProviders(Array.isArray(options) ? options : [options]);
-    const providers = this.createConnectionProviders(Array.isArray(options) ? options : [options]);
-    
+  public static forRoot(options: AmqpOptionsInterface | AmqpOptionsInterface[]): DynamicModule {
+
+    const optionsProviders: Provider[] = [];
+    const connectionProviders: Provider[] = [];
+
+    if (!Array.isArray(options) && !options.hasOwnProperty('name')) options.name = 'default';
+
+    if (!Array.isArray(options)) {
+      options = [options];
+    }
+
+    options.forEach((options, key) => {  
+      if (!options.hasOwnProperty('name')) {
+        options.name = key.toString();
+      }
+      optionsProviders.push(this.createOptionsProvider(options));
+      connectionProviders.push(this.createConnectionProvider(options));
+    });
+
     return {
-      module: AMQPModule,
+      module: AmqpModule,
       providers: [
-        ...providersOptions,
-        ...providers,
+        ...optionsProviders,
+        ...connectionProviders,
       ],
-      exports: providers,
-    };
-  }
-
-  public static forRootAsync(options: AmqpConnectionAsyncOptions): DynamicModule {
-    return {
-      module: AMQPModule,
-      imports: [],
-      providers: [],
-      exports: [],
+      exports: connectionProviders,
     };
   }
 
   public static forFeature(): DynamicModule {
     return {
-      module: AMQPModule,
+      module: AmqpModule,
     };
   }
 
-  private static createOptionsProviders(options: AmqpConnectionOptions[]): Provider[] {
-    let providers = [];
-    options.forEach(option => {
-      providers.push(createConnectionOptionsProvider(option));
-    });
-
-    return providers;
+  private static createOptionsProvider(options: AmqpOptionsInterface): Provider {
+    return {
+      provide: createOptionsToken(options.name),
+      useValue: options,
+    };
   }
 
-  private static createConnectionProviders(connections: AmqpConnectionOptions[]): Provider[] {
-    let providers = [];
-    connections.forEach(connection => {
-      providers.push(createConnectionProvider(connection));
-    });
-
-    return providers;
+  private static createConnectionProvider(options: AmqpOptionsInterface): Provider {
+    return {
+      provide: createConnectionToken(options.name),
+      //TODO resolve host url
+      useFactory: async (options: AmqpOptionsInterface) => await amqp.connect(options),
+      inject: [createOptionsToken(options.name)],
+    };
   }
 }

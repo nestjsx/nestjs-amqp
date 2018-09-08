@@ -1,5 +1,0 @@
-AMQP_HOST=localhost
-AMQP_PORT=5672
-AMQP_USERNAME=guest
-AMQP_PASSWORD=guest
-AMQP_SSL=false

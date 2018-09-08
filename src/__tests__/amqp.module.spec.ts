@@ -1,92 +1,101 @@
-import { Test } from '@nestjs/testing';
-import AmqpModule from './../amqp.module';
-import { ConfigModule } from 'nestjs-config';
-import { Injectable, Module } from '@nestjs/common';
-import { InjectAmqpConnection } from './../decorators';
-var ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
+import {Test, TestingModule} from '@nestjs/testing';
+import {AmqpModule} from './../index';
+import { createConnectionToken } from '../utils/create.tokens';
+import { Module } from '@nestjs/common';
+const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
 
-describe('Instance amqp module', () => {
-  it('Load module with an array of connection', async () => {
-    const module = await Test.createTestingModule({
+describe('AmqpModule', () => {
+  it('Instace Amqp', async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [AmqpModule.forRoot({
+        host: 'amqp://localhost:5672',
+      })],
+    }).compile();
+
+    const amqpModule = module.get(AmqpModule);
+
+    expect(amqpModule).toBeInstanceOf(AmqpModule);
+
+    module.get(createConnectionToken('default')).close();
+  });
+
+  it('Instace Amqp Connection provider', async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [AmqpModule.forRoot({
+        host: 'amqp://localhost:5672',
+      })],
+    }).compile();
+
+    const amqpConnection = module.get(createConnectionToken('default'));
+
+    expect(amqpConnection).toBeInstanceOf(ChannelModel);
+
+    amqpConnection.close();
+  });
+
+  it('Multiple connection options', async () => {
+    const module: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.load(),
         AmqpModule.forRoot([
           {
             host: 'amqp://localhost:5672',
+            name: 'test',
           },
           {
-            host: 'localhost',
-            port: 5672,
-            name: 'test',
+            host: 'amqp://localhost:5672',
           },
         ]),
       ],
     }).compile();
 
-    const connection1 = module.get<any>('amqpConnection_0');
-    const connectionTest = module.get<any>('amqpConnection_test');
+    const amqpConnectionTest = module.get(createConnectionToken('test'));
+    const amqpConnection1 = module.get(createConnectionToken('1'));
 
-    expect(connection1).toBeInstanceOf(ChannelModel);
-    expect(connectionTest).toBeInstanceOf(ChannelModel);
+    expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
+    expect(amqpConnection1).toBeInstanceOf(ChannelModel);
 
-    connection1.close();
-    connectionTest.close();
+    amqpConnection1.close();
+    amqpConnectionTest.close();
   });
 
-  it('Load module with singular connection', async () => {
-    const module = await Test.createTestingModule({
-      imports: [
-        ConfigModule.load(),
-        AmqpModule.forRoot({
-          host: 'amqp://localhost:5672',
-        }),
-      ],
-    }).compile();
+  // it('Connection options', async () => {
+  //   const module: TestingModule = await Test.createTestingModule({
+  //     imports: [
+  //       AmqpModule.forRoot({
+  //         host: 'localhost',
+  //         name: 'test',
+  //         port: 5672,
+  //       }),
+  //     ],
+  //   }).compile();
 
-    const connection = module.get<any>('amqpConnection_default');
+  //   const amqpConnectionTest = module.get(createConnectionToken('test'));
 
-    expect(connection).toBeInstanceOf(ChannelModel);
-    connection.close();
-  });
+  //   expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
 
-  it('Load module within an additional module using forFeature', async () => {
-    @Injectable()
-    class Provider {
-      constructor(@InjectAmqpConnection() private readonly connection) {}
+  //   amqpConnectionTest.close();
+  // });
 
-      hasConnection() {
-        return this.connection;
-      }
-
-      closeConnection() {
-        this.connection.close();
-      }
-    }
+  it('Connection available in submodule', async () => {
 
     @Module({
       imports: [AmqpModule.forFeature()],
-      providers: [Provider],
     })
     class SubModule {}
 
-    const module = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.load(),
         AmqpModule.forRoot({
-          host: 'amqp://localhost:5672',
+          host: 'localhost',
         }),
         SubModule,
       ],
     }).compile();
-    expect(
-      module
-        .select(SubModule)
-        .get<Provider>(Provider)
-        .hasConnection(),
-    ).toBeInstanceOf(ChannelModel);
-    module
-      .select(SubModule)
-      .get<Provider>(Provider)
-      .closeConnection();
+
+    const provider = module.select<SubModule>(SubModule).get(createConnectionToken('default'));
+
+    expect(provider).toBeInstanceOf(ChannelModel);
+
+    provider.close();
   });
 });
