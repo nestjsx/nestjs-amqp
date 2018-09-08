@@ -58,23 +58,25 @@ describe('AmqpModule', () => {
     amqpConnectionTest.close();
   });
 
-  // it('Connection options', async () => {
-  //   const module: TestingModule = await Test.createTestingModule({
-  //     imports: [
-  //       AmqpModule.forRoot({
-  //         host: 'localhost',
-  //         name: 'test',
-  //         port: 5672,
-  //       }),
-  //     ],
-  //   }).compile();
+  it('Connection options', async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        AmqpModule.forRoot({
+          host: 'localhost',
+          name: 'test',
+          port: 5673,
+          username: 'user',
+          password: 'pass',
+        }),
+      ],
+    }).compile();
 
-  //   const amqpConnectionTest = module.get(createConnectionToken('test'));
+    const amqpConnectionTest = module.get(createConnectionToken('test'));
 
-  //   expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
+    expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
 
-  //   amqpConnectionTest.close();
-  // });
+    amqpConnectionTest.close();
+  });
 
   it('Connection available in submodule', async () => {
 
