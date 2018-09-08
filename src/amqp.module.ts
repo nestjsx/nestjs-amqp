@@ -1,7 +1,9 @@
 import {Module, DynamicModule, Provider} from '@nestjs/common';
-import { AmqpOptionsInterface, AmqpAsyncOptionsInterface } from './interfaces';
+import { AmqpOptionsInterface } from './interfaces';
 import { createOptionsToken, createConnectionToken } from './utils/create.tokens';
+import {from} from 'rxjs';
 import * as amqp from 'amqplib';
+import retry from './utils/retry';
 
 @Module({})
 export default class AmqpModule {
@@ -47,8 +49,8 @@ export default class AmqpModule {
   private static createConnectionProvider(options: AmqpOptionsInterface): Provider {
     return {
       provide: createConnectionToken(options.name),
-      //TODO resolve host url
-      useFactory: async (options: AmqpOptionsInterface) => await amqp.connect(options),
+      //TODO resolve host url: do I need to? Seems to work aready? Just verify
+      useFactory: async (options: AmqpOptionsInterface) => await from(amqp.connect(options)).pipe(retry()).toPromise(),
       inject: [createOptionsToken(options.name)],
     };
   }
