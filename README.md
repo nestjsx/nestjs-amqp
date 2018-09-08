@@ -1,12 +1,15 @@
-Nestjs AMQP
-===
+<p align="center"><img src="https://avatars1.githubusercontent.com/u/41109786?s=200&v=4"/></p>
+<p align="center">
+    <a href="https://travis-ci.org/nestjs-community/nestjs-amqp"><img src="https://travis-ci.org/nestjs-community/nestjs-amqp.svg?branch=master"/></a>
+    <a href="https://www.npmjs.com/package/nestjs-amqp"><img src="https://img.shields.io/npm/v/nestjs-amqp.svg"/></a>
+    <a href="https://github.com/nestjs-community/nestjs-amqp/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nestjs-community/nestjs-amqp.svg"/></a>
+    <a href="https://coveralls.io/github/nestjs-community/nestjs-amqp?branch=master"><img src="https://coveralls.io/repos/github/nestjs-community/nestjs-amqp/badge.svg?branch=master"/></a>
+</p>
 
-[![Build Status](https://travis-ci.org/nestjs-community/nestjs-amqp.svg?branch=master)](https://travis-ci.org/nestjs-community/nestjs-amqp)
-[![GitHub version](https://img.shields.io/npm/v/nestjs-amqp.svg)](https://www.npmjs.com/package/nestjs-amqp)
-[![GitHub license](https://img.shields.io/github/license/nestjs-community/nestjs-amqp.svg)](https://github.com/nestjs-community/nestjs-amqp/blob/master/LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/nestjs-community/nestjs-amqp/badge.svg?branch=master)](https://coveralls.io/github/nestjs-community/nestjs-amqp?branch=master)
 
-An amqp connection service for nestjs.
+<p align="center">An AMQP connection service for <a href="">NestJS</a>.</p>
+
+<p>Using the <a href="https://github.com/squaremo/amqp.node">AMQPlib</a> for node package.</p>
 
 ## Install
 
@@ -33,7 +36,7 @@ export default AppModule {}
 
 ```
 
-### Usage with nestjs-config
+<!-- ### Usage with nestjs-config
 
 ```ts
 import {Module} from '@nestjs/common';
@@ -59,7 +62,7 @@ export default {
   port: process.env.AMQP_PORT,
   username: process.env.USERNAME,
   password: process.env.PASSWORD,
-}
+} 
 
 //alternatively you can use an array 
 export default [
@@ -75,8 +78,8 @@ export default [
     host: process.env.ANOTHER_CONNECTION,
     port: process.env.ANOTHER_PORT,
   },
-];
-```
+]; 
+``` -->
 
 ## tests
 In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
