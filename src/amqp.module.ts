@@ -1,5 +1,5 @@
 import {Module, DynamicModule, Provider} from '@nestjs/common';
-import { AmqpOptionsInterface } from './interfaces';
+import { AmqpOptionsInterface, AmqpAsyncOptionsInterface } from './interfaces';
 import { createOptionsToken, createConnectionToken } from './utils/create.tokens';
 import * as amqp from 'amqplib';
 
@@ -11,11 +11,7 @@ export default class AmqpModule {
     const optionsProviders: Provider[] = [];
     const connectionProviders: Provider[] = [];
 
-    if (!Array.isArray(options) && !options.hasOwnProperty('name')) options.name = 'default';
-
-    if (!Array.isArray(options)) {
-      options = [options];
-    }
+    options = this.resolveOptions(options);
 
     options.forEach((options, key) => {  
       if (!options.hasOwnProperty('name')) {
@@ -55,5 +51,15 @@ export default class AmqpModule {
       useFactory: async (options: AmqpOptionsInterface) => await amqp.connect(options),
       inject: [createOptionsToken(options.name)],
     };
+  }
+
+  private static resolveOptions(options: AmqpOptionsInterface|AmqpOptionsInterface[]): AmqpOptionsInterface[] {
+    if (!Array.isArray(options) && !options.hasOwnProperty('name')) options.name = 'default';
+
+    if (!Array.isArray(options)) {
+      options = [options];
+    }
+
+    return options;
   }
 }
