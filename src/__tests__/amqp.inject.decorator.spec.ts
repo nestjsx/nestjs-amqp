@@ -18,7 +18,7 @@ describe('InjectAmqpConnection', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: 'localhost',
+          host: process.env.HOST,
         }),
       ],
       providers: [TestProvider],
@@ -43,10 +43,10 @@ describe('InjectAmqpConnection', () => {
       imports: [
         AmqpModule.forRoot([
           {
-            host: 'localhost',
+            host: process.env.HOST,
           },
           {
-            host: 'localhost',
+            host: process.env.HOST,
           },
         ]),
       ],

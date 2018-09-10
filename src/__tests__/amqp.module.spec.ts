@@ -9,7 +9,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: 'amqp://localhost:5672',
+          host: `amqp://${process.env.HOST}:5672`,
         }),
       ],
     }).compile();
@@ -25,7 +25,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: 'amqp://localhost:5672',
+          host: `amqp://${process.env.HOST}:5672`,
         }),
       ],
     }).compile();
@@ -42,11 +42,11 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot([
           {
-            host: 'amqp://localhost:5672',
+            host: `amqp://${process.env.HOST}:5672`,
             name: 'test',
           },
           {
-            host: 'amqp://localhost:5672',
+            host: `amqp://${process.env.HOST}:5672`,
           },
         ]),
       ],
@@ -66,7 +66,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: 'localhost',
+          host: process.env.HOST,
           name: 'test',
           port: 5673,
           username: 'user',
@@ -91,7 +91,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: 'localhost',
+          host: process.env.HOST,
         }),
         SubModule,
       ],
