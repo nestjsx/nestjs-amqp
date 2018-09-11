@@ -9,7 +9,7 @@ describe('Amqp Retry', () => {
     try {
       const result = await from(
         amqp.connect({
-          host: 'notathing',
+          hostname: 'notathing',
           port: 3444,
         }),
       )

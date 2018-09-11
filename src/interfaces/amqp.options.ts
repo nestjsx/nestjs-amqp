@@ -1,8 +1,7 @@
-export default interface AmqpOptionsInterface {
-  host: string;
+import { Options } from "amqplib";
+
+export default interface AmqpOptionsInterface extends Options.Connect {
   name?: string;
-  port?: number;
-  username?: string;
-  password?: string;
-  ssl?: boolean;
+  retrys?: number;
+  retryDelay?: number;
 }

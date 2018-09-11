@@ -12,6 +12,7 @@
     "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
     "@nestjs/testing": "^5.1.0",
+    "@types/amqplib": "^0.5.8",
     "@types/es6-promise": "^3.3.0",
     "@types/node": "^10.5.1",
     "coveralls": "^3.0.2",
@@ -55,6 +56,8 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "./coverage",
-    "setupFiles": ["<rootDir>/__tests__/setup.js"]
+    "setupFiles": [
+      "<rootDir>/__tests__/setup.js"
+    ]
   }
 }

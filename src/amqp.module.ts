@@ -50,7 +50,7 @@ export default class AmqpModule {
     return {
       provide: createConnectionToken(options.name),
       //TODO resolve host url: do I need to? Seems to work aready? Just verify
-      useFactory: async (options: AmqpOptionsInterface) => await from(amqp.connect(options)).pipe(retry()).toPromise(),
+      useFactory: async (options: AmqpOptionsInterface) => await from(amqp.connect(options)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
       inject: [createOptionsToken(options.name)],
     };
   }

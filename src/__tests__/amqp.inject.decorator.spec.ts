@@ -18,7 +18,8 @@ describe('InjectAmqpConnection', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          host: process.env.HOST,
+          hostname: process.env.HOST,
+          retrys: 1,
         }),
       ],
       providers: [TestProvider],
@@ -43,10 +44,12 @@ describe('InjectAmqpConnection', () => {
       imports: [
         AmqpModule.forRoot([
           {
-            host: process.env.HOST,
+            hostname: process.env.HOST,
+            retrys: 1,
           },
           {
-            host: process.env.HOST,
+            hostname: process.env.HOST,
+            retrys: 1,
           },
         ]),
       ],

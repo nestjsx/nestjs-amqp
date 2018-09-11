@@ -26,7 +26,7 @@ import {AmqpModule} from 'nestjs-amqp';
 @Module({
   imports: [AmqpModule.forRoot({
     name: 'rabbitmq',
-    host: 'localhost',
+    hostname: 'localhost',
     port: 5672,
     username: 'test',
     password: 'test',
@@ -58,7 +58,7 @@ export default AppModule {}
 //src/config/amqp.ts
 export default {
   name: 'rabbitmq',
-  host: process.env.AMQP_HOST,
+  hostname: process.env.AMQP_HOST,
   port: process.env.AMQP_PORT,
   username: process.env.USERNAME,
   password: process.env.PASSWORD,
@@ -68,14 +68,14 @@ export default {
 export default [
   {
     name: 'rabbitmq',
-    host: process.env.AMQP_HOST,
+    hostname: process.env.AMQP_HOST,
     port: process.env.AMQP_PORT,
     username: process.env.USERNAME,
     password: process.env.PASSWORD,
   },
   {
     name: 'other_connection',
-    host: process.env.ANOTHER_CONNECTION,
+    hostname: process.env.ANOTHER_CONNECTION,
     port: process.env.ANOTHER_PORT,
   },
 ]; 
@@ -102,7 +102,7 @@ import {AmqpModule} from 'nestjs-amqp';
     {
       username: 'test',
       password: 'test',
-      host: 'localhost',
+      hostname: 'localhost',
       port: 5672,
       ssl: true,
       name: 'test',
