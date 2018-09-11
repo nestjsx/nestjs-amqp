@@ -9,7 +9,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          hostname: `amqp://${process.env.HOST}`,
+          hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
@@ -26,7 +26,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          hostname: `amqp://${process.env.HOST}`,
+          hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
@@ -44,12 +44,12 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot([
           {
-            hostname: `amqp://${process.env.HOST}`,
+            hostname: process.env.HOST,
             name: 'test',
             retrys: 1,
           },
           {
-            hostname: `amqp://${process.env.HOST}`,
+            hostname: process.env.HOST,
             retrys: 1,
           },
         ]),
