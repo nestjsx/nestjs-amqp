@@ -36,7 +36,7 @@ export default AppModule {}
 
 ```
 
-<!-- ### Usage with nestjs-config
+### Usage with nestjs-config
 
 ```ts
 import {Module} from '@nestjs/common';
@@ -48,7 +48,7 @@ import * as path from 'path';
   imports: [
     ConfigModule.load(path.resolve(__dirname, 'config', '**/*.ts')),
     AmqpModule.forRootAsync({
-      useFactory: (config: ConfigService) => config.get('aqmp'),
+      useFactory: (config: ConfigService) => config.get('amqp'),
       inject: [ConfigService],
     }),
   ],
@@ -63,32 +63,10 @@ export default {
   username: process.env.USERNAME,
   password: process.env.PASSWORD,
 } 
-
-//alternatively you can use an array 
-export default [
-  {
-    name: 'rabbitmq',
-    hostname: process.env.AMQP_HOST,
-    port: process.env.AMQP_PORT,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
-  },
-  {
-    name: 'other_connection',
-    hostname: process.env.ANOTHER_CONNECTION,
-    port: process.env.ANOTHER_PORT,
-  },
-]; 
-``` -->
-
-## tests
-In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
-
-```bash
-$ docker-compose up -d 
-$ yarn test
 ```
-> Navigate to localhost:15672 for rabbitmq manager, username and password are both `guest`
+> Unfortunately multiple connections are unavailable when using the `forRootAsync` method.
+
+## Connection Decorators
 
 ```ts
 import {Module} from '@nestjs/common';
@@ -126,6 +104,54 @@ export default TestService {
 }
 ```
 > Use InjectAmqpConnection without a parameter for default connection
+
+### Example publish 
+
+```ts
+mport {Injectable, Logger} from '@nestjs/common';
+import {InjectAmqpConnection} from 'nestjs-amqp';
+
+@Injectable()
+export default TestProvider {
+  constructor(@InjectAmqpConnection() private readonly amqp) {}
+  async publish(message: string)  {
+    await this.amqp.createChannel((err, channel) => {
+      if (err != null) {
+        Logger.alert(err, 'TestProvider');
+      }
+      channel.assertQueue('test_queue_name');
+      channel.sendToQueue('test_queue_name', message);
+    });
+  }
+}
+```
+
+## Available Options
+
+Name | For | Default
+--- | --- | ---
+hostname | The host url for the connection | `localhost`
+port | The port of the amqp host | `5672`
+name | The name of the connection | `default` or the array key
+retrys | The amount of retry attempts before surrender | 3
+retryDelay | The amount of milliseconds to wait before attempting retry | 3000
+protocol | The protocol for the connection | `amqp`
+username | The username for the connection | 
+password | The password for the connection |
+locale | The desired locale for error messages | `en_US`
+frameMax | The size in bytes of the maximum frame allowed over the connection 
+heartbeat | The period of the connection heartbeat in seconds | 0
+vhost | What VHost shall be used | `/`
+
+## Tetsing this package
+
+In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
+
+```bash
+$ docker-compose up -d 
+$ yarn test
+```
+> Navigate to localhost:15672 for rabbitmq manager, username and password are both `guest`
 
 ## Future implementation
 
