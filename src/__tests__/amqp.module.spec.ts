@@ -3,6 +3,9 @@ import { AmqpModule } from './../index';
 import { createConnectionToken } from '../utils/create.tokens';
 import { Module } from '@nestjs/common';
 const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
+import {ConfigModule, ConfigService} from 'nestjs-config';
+import * as path from 'path';
+import { InjectAmqpConnection } from '../decorators';
 
 describe('AmqpModule', () => {
   it('Instace Amqp', async () => {
@@ -110,5 +113,34 @@ describe('AmqpModule', () => {
     expect(provider).toBeInstanceOf(ChannelModel);
 
     provider.close();
+  });
+
+  it('Connections should build with AmqpAsyncOptionsInterface', async () => {
+
+    class TestProvider {
+      constructor(@InjectAmqpConnection() private readonly amqp) {}
+
+      getAmqp() {
+        return this.amqp;
+      }
+    }
+
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ConfigModule.load(path.resolve(__dirname, '__stubs__', 'config', '*.ts')),
+        AmqpModule.forRootAsync({
+          useFactory: async (config) => config.get('amqp'),
+          inject: [ConfigService],
+        }),
+      ],
+      providers: [TestProvider],
+    }).compile();
+
+    const provider = module.get(TestProvider);
+
+    expect(provider.getAmqp()).toBeInstanceOf(ChannelModel);
+
+    provider.getAmqp().close();
+
   });
 });

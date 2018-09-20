@@ -1,9 +1,10 @@
 import {Module, DynamicModule, Provider} from '@nestjs/common';
-import { AmqpOptionsInterface } from './interfaces';
-import { createOptionsToken, createConnectionToken } from './utils/create.tokens';
+import { AmqpOptionsInterface, AmqpAsyncOptionsInterface, AmqpOptionsObjectInterface } from './interfaces';
+import { createConnectionToken, createOptionsToken } from './utils/create.tokens';
 import {from} from 'rxjs';
 import * as amqp from 'amqplib';
 import retry from './utils/retry';
+import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
 
 @Module({})
 export default class AmqpModule {
@@ -15,11 +16,12 @@ export default class AmqpModule {
 
     options = this.resolveOptions(options);
 
+    optionsProviders.push(this.createOptionsProvider(options));
+
     options.forEach((options, key) => {  
       if (!options.hasOwnProperty('name')) {
         options.name = key.toString();
       }
-      optionsProviders.push(this.createOptionsProvider(options));
       connectionProviders.push(this.createConnectionProvider(options));
     });
 
@@ -39,10 +41,44 @@ export default class AmqpModule {
     };
   }
 
-  private static createOptionsProvider(options: AmqpOptionsInterface): Provider {
+  public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
+
+    const connectionProviders = [
+      {
+        provide: createConnectionToken('default'),
+        useFactory: async (config: AmqpOptionsInterface) => {
+          return await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise();
+        },
+        inject: [createOptionsToken('default')],
+      },
+    ];
+
     return {
-      provide: createOptionsToken(options.name),
-      useValue: options,
+      module: AmqpModule,
+      providers: [
+        {
+          provide: createOptionsToken('default'),
+          useFactory: options.useFactory,
+          inject: options.inject || [],
+        },
+        ...connectionProviders,
+      ],
+      exports: connectionProviders,
+    };
+  }
+
+  private static createOptionsProvider(options: AmqpOptionsInterface[]): Provider {
+    const optionsObject: AmqpOptionsObjectInterface = {};
+
+    if (Array.isArray(options)) {
+      options.forEach((options) => {
+        optionsObject[options.name] = options;
+      });
+    }
+
+    return {
+      provide: AMQP_OPTIONS_PROVIDER,
+      useValue: optionsObject,
     };
   }
 
@@ -50,8 +86,8 @@ export default class AmqpModule {
     return {
       provide: createConnectionToken(options.name),
       //TODO resolve host url: do I need to? Seems to work aready? Just verify
-      useFactory: async (options: AmqpOptionsInterface) => await from(amqp.connect(options)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
-      inject: [createOptionsToken(options.name)],
+      useFactory: async (config: AmqpOptionsObjectInterface) => await from(amqp.connect(config[options.name ? options.name : 'default'])).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
+      inject: [AMQP_OPTIONS_PROVIDER],
     };
   }
 
@@ -61,6 +97,12 @@ export default class AmqpModule {
     if (!Array.isArray(options)) {
       options = [options];
     }
+
+    options.forEach((options, key) => {
+      if (!options.hasOwnProperty('name')) {
+        options.name = key.toString();
+      }
+    });
 
     return options;
   }
