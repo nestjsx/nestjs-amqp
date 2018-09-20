@@ -1,4 +1,4 @@
-import { AmqpOptionsInterface } from '.';
+import AmqpOptionsInterface from './amqp.options';
 
 export default interface AmqpAsyncOptionsInterface {
   inject?: any[];
