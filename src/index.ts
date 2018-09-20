@@ -1,5 +1,8 @@
-import AMQPModule from "./amqp.module";
-import { InjectAmqpConnection } from "./decorators";
+import AmqpModule from './amqp.module';
 
-export default AMQPModule;
-export { InjectAmqpConnection };
+export * from './interfaces';
+export * from './decorators';
+
+export {
+  AmqpModule,
+};

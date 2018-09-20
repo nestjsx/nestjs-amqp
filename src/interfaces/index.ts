@@ -1,3 +1,9 @@
-import AmqpConnectionOptions from './amqpconnection-options.interface';
+import AmqpOptionsInterface from './amqp.options';
+import AmqpAsyncOptionsInterface from './amqp.async.options';
+import AmqpOptionsObjectInterface from './amqp.options.object.interface';
 
-export { AmqpConnectionOptions };
+export {
+  AmqpOptionsInterface,
+  AmqpAsyncOptionsInterface,
+  AmqpOptionsObjectInterface,
+};
