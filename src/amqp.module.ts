@@ -43,9 +43,7 @@ export default class AmqpModule {
     const connectionProviders = [
       {
         provide: createConnectionToken('default'),
-        useFactory: async (config: AmqpOptionsInterface) => {
-          return await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise();
-        },
+        useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
         inject: [createOptionsToken('default')],
       },
     ];
