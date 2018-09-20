@@ -34,10 +34,17 @@ describe('InjectAmqpConnection', () => {
   it('Connection should inject with name', async () => {
     @Injectable()
     class TestProvider {
-      constructor(@InjectAmqpConnection('1') private readonly connection) {}
+      constructor(
+        @InjectAmqpConnection('1') private readonly connection,
+        @InjectAmqpConnection('0') private readonly connection0,
+      ) {}
 
       getConnection() {
         return this.connection;
+      }
+
+      getConnection0() {
+        return this.connection0;
       }
     }
 
@@ -60,6 +67,8 @@ describe('InjectAmqpConnection', () => {
     const provider = module.get(TestProvider);
 
     expect(provider.getConnection()).toBeInstanceOf(ChannelModel);
+    expect(provider.getConnection0()).toBeInstanceOf(ChannelModel);
     provider.getConnection().close();
+    provider.getConnection0().close();
   });
 });
