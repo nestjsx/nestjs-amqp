@@ -156,6 +156,8 @@ $ yarn test
 ```
 > Navigate to localhost:15672 for rabbitmq manager, username and password are both `guest`
 
+> If you're using docker-machine or a VM then change the env for `HOST` in the `.env` file or create one using the provided `.env.dist` file.
+
 ## Future implementation
 
 So far this package manages multiple AMQP connections using the nestjs container and inject them into other providers.  
