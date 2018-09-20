@@ -28,6 +28,7 @@ describe('InjectAmqpConnection', () => {
     const provider = module.get(TestProvider);
 
     expect(provider.getConnection()).toBeInstanceOf(ChannelModel);
+    provider.getConnection().close();
   });
 
   it('Connection should inject with name', async () => {
@@ -59,5 +60,6 @@ describe('InjectAmqpConnection', () => {
     const provider = module.get(TestProvider);
 
     expect(provider.getConnection()).toBeInstanceOf(ChannelModel);
+    provider.getConnection().close();
   });
 });
