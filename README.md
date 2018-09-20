@@ -11,6 +11,8 @@
 
 <p>Using the <a href="https://github.com/squaremo/amqp.node">AMQPlib</a> for node package.</p>
 
+This package was intented to be used in execution content and provides a basic AMQPlib connection via the providers to allow developers to develop their amqp queue consumers and publishers. No transport for micro-services is provided as of yet.
+
 ## Install
 
 ```bash
