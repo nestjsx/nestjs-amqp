@@ -75,14 +75,14 @@ import {AmqpModule} from 'nestjs-amqp';
 @module({
   imports: [AmqpModule.forRoot([
     {
-      host: 'amqp://test:test@localhost',
+      hostname: 'test:test@localhost',
     }, 
     {
       username: 'test',
       password: 'test',
       hostname: 'localhost',
       port: 5672,
-      ssl: true,
+      protocol: 'amqps',
       name: 'test',
     }
   ])],
@@ -125,6 +125,7 @@ export default TestProvider {
   }
 }
 ```
+More information and examples about amqplib can be found [here](https://www.npmjs.com/package/amqplib).
 
 ## Available Options
 
@@ -139,7 +140,7 @@ protocol | The protocol for the connection | `amqp`
 username | The username for the connection | 
 password | The password for the connection |
 locale | The desired locale for error messages | `en_US`
-frameMax | The size in bytes of the maximum frame allowed over the connection 
+frameMax | The size in bytes of the maximum frame allowed over the connection | 0
 heartbeat | The period of the connection heartbeat in seconds | 0
 vhost | What VHost shall be used | `/`
 
