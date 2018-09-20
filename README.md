@@ -108,7 +108,7 @@ export default TestService {
 ### Example publish 
 
 ```ts
-mport {Injectable, Logger} from '@nestjs/common';
+import {Injectable, Logger} from '@nestjs/common';
 import {InjectAmqpConnection} from 'nestjs-amqp';
 
 @Injectable()
