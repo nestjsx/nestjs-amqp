@@ -18,7 +18,7 @@ export default class AmqpModule {
 
     optionsProviders.push(this.createOptionsProvider(options));
 
-    options.forEach((options, key) => {  
+    options.forEach(options => {  
       connectionProviders.push(this.createConnectionProvider(options));
     });
 

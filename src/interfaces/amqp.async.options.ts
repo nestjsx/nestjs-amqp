@@ -5,4 +5,4 @@ export default interface AmqpAsyncOptionsInterface {
   useFactory?: (...args: any[]) => Promise<AmqpOptionsInterface>;
   retrys?: number;
   retryDelay?: number;
-};
+}
