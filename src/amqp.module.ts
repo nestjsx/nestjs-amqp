@@ -19,9 +19,6 @@ export default class AmqpModule {
     optionsProviders.push(this.createOptionsProvider(options));
 
     options.forEach((options, key) => {  
-      if (!options.hasOwnProperty('name')) {
-        options.name = key.toString();
-      }
       connectionProviders.push(this.createConnectionProvider(options));
     });
 
