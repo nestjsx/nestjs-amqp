@@ -24,7 +24,7 @@ describe('InjectAmqpConnection', () => {
       ],
       providers: [TestProvider],
     }).compile();
-    
+
     const app = module.createNestApplication();
     await app.init();
 
