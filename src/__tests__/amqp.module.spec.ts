@@ -21,7 +21,6 @@ describe('AmqpModule', () => {
     const amqpModule = module.get(AmqpModule);
 
     expect(amqpModule).toBeInstanceOf(AmqpModule);
-    //await module.destroy();
   });
 
   it('Instace Amqp Connection provider', async () => {
