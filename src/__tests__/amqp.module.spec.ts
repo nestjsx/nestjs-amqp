@@ -21,8 +21,7 @@ describe('AmqpModule', () => {
     const amqpModule = module.get(AmqpModule);
 
     expect(amqpModule).toBeInstanceOf(AmqpModule);
-
-    module.get(createConnectionToken('default')).close();
+    //await module.destroy();
   });
 
   it('Instace Amqp Connection provider', async () => {
@@ -38,8 +37,6 @@ describe('AmqpModule', () => {
     const amqpConnection = module.get(createConnectionToken('default'));
 
     expect(amqpConnection).toBeInstanceOf(ChannelModel);
-
-    amqpConnection.close();
   });
 
   it('Multiple connection options', async () => {
@@ -64,9 +61,6 @@ describe('AmqpModule', () => {
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
     expect(amqpConnection1).toBeInstanceOf(ChannelModel);
-
-    amqpConnection1.close();
-    amqpConnectionTest.close();
   });
 
   it('Connection options', async () => {
@@ -86,8 +80,6 @@ describe('AmqpModule', () => {
     const amqpConnectionTest = module.get(createConnectionToken('test'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
-
-    amqpConnectionTest.close();
   });
 
   it('Connection available in submodule', async () => {
@@ -111,8 +103,6 @@ describe('AmqpModule', () => {
       .get(createConnectionToken('default'));
 
     expect(provider).toBeInstanceOf(ChannelModel);
-
-    provider.close();
   });
 
   it('Connections should build with AmqpAsyncOptionsInterface', async () => {
@@ -140,7 +130,5 @@ describe('AmqpModule', () => {
     const provider = module.get(TestProvider);
 
     expect(provider.getAmqp()).toBeInstanceOf(ChannelModel);
-
-    provider.getAmqp().close();
   });
 });
