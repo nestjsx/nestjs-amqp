@@ -12,34 +12,41 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'instance',
           hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpModule = module.get(AmqpModule);
 
     expect(amqpModule).toBeInstanceOf(AmqpModule);
 
-    module.get(createConnectionToken('default')).close();
+    await app.close();
   });
 
   it('Instace Amqp Connection provider', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'first',
           hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
     }).compile();
 
-    const amqpConnection = module.get(createConnectionToken('default'));
+    const app = module.createNestApplication();
+    await app.init();
+
+    const amqpConnection = module.get(createConnectionToken('first'));
 
     expect(amqpConnection).toBeInstanceOf(ChannelModel);
-
-    amqpConnection.close();
+    await app.close();
   });
 
   it('Multiple connection options', async () => {
@@ -59,14 +66,15 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpConnectionTest = module.get(createConnectionToken('test'));
     const amqpConnection1 = module.get(createConnectionToken('1'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
     expect(amqpConnection1).toBeInstanceOf(ChannelModel);
-
-    amqpConnection1.close();
-    amqpConnectionTest.close();
+    await app.close();
   });
 
   it('Connection options', async () => {
@@ -74,7 +82,7 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot({
           hostname: process.env.HOST,
-          name: 'test',
+          name: 'test2',
           port: 5673,
           username: 'user',
           password: 'pass',
@@ -83,11 +91,13 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
-    const amqpConnectionTest = module.get(createConnectionToken('test'));
+    const app = module.createNestApplication();
+    await app.init();
+
+    const amqpConnectionTest = module.get(createConnectionToken('test2'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
-
-    amqpConnectionTest.close();
+    await app.close();
   });
 
   it('Connection available in submodule', async () => {
@@ -99,6 +109,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'subModule',
           hostname: process.env.HOST,
           retrys: 1,
         }),
@@ -106,13 +117,15 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module
       .select<SubModule>(SubModule)
-      .get(createConnectionToken('default'));
+      .get(createConnectionToken('subModule'));
 
     expect(provider).toBeInstanceOf(ChannelModel);
-
-    provider.close();
+    await app.close();
   });
 
   it('Connections should build with AmqpAsyncOptionsInterface', async () => {
@@ -137,10 +150,12 @@ describe('AmqpModule', () => {
       providers: [TestProvider],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module.get(TestProvider);
 
     expect(provider.getAmqp()).toBeInstanceOf(ChannelModel);
-
-    provider.getAmqp().close();
+    await app.close();
   });
 });

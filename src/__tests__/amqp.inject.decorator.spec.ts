@@ -25,10 +25,13 @@ describe('InjectAmqpConnection', () => {
       providers: [TestProvider],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module.get(TestProvider);
 
     expect(provider.getConnection()).toBeInstanceOf(ChannelModel);
-    provider.getConnection().close();
+    await app.close();
   });
 
   it('Connection should inject with name', async () => {
@@ -64,11 +67,13 @@ describe('InjectAmqpConnection', () => {
       providers: [TestProvider],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module.get(TestProvider);
 
     expect(provider.getConnection()).toBeInstanceOf(ChannelModel);
     expect(provider.getConnection0()).toBeInstanceOf(ChannelModel);
-    provider.getConnection().close();
-    provider.getConnection0().close();
+    await app.close();
   });
 });
