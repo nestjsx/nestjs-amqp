@@ -1,13 +1,17 @@
-import {Module, DynamicModule, Provider} from '@nestjs/common';
+import {Module, DynamicModule, Provider, OnModuleDestroy} from '@nestjs/common';
 import { AmqpOptionsInterface, AmqpAsyncOptionsInterface, AmqpOptionsObjectInterface } from './interfaces';
 import { createConnectionToken, createOptionsToken } from './utils/create.tokens';
 import {from} from 'rxjs';
 import * as amqp from 'amqplib';
 import retry from './utils/retry';
 import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
+import { ModuleRef } from '@nestjs/core';
 
 @Module({})
-export default class AmqpModule {
+export default class AmqpModule implements OnModuleDestroy {
+  private static connectionNames: string[] = [];
+
+  constructor(private readonly moduleRef: ModuleRef) {}
 
   public static forRoot(options: AmqpOptionsInterface | AmqpOptionsInterface[]): DynamicModule {
 
@@ -39,6 +43,8 @@ export default class AmqpModule {
   }
 
   public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
+    
+    AmqpModule.connectionNames.push(createConnectionToken('default'));
 
     const connectionProviders = [
       {
@@ -78,6 +84,7 @@ export default class AmqpModule {
   }
 
   private static createConnectionProvider(options: AmqpOptionsInterface): Provider {
+    AmqpModule.connectionNames.push(createConnectionToken(options.name));
     return {
       provide: createConnectionToken(options.name),
       //TODO resolve host url: do I need to? Seems to work aready? Just verify
@@ -100,5 +107,12 @@ export default class AmqpModule {
     });
 
     return options;
+  }
+
+  async onModuleDestroy(): Promise<void> {
+    AmqpModule.connectionNames.forEach(async connectionName => {
+      const connection = this.moduleRef.get<amqp.Channel>(connectionName);
+      await connection.close();
+    });
   }
 }
