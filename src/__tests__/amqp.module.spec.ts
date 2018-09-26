@@ -12,6 +12,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'instance',
           hostname: process.env.HOST,
           retrys: 1,
         }),
@@ -32,6 +33,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'first',
           hostname: process.env.HOST,
           retrys: 1,
         }),
@@ -41,7 +43,7 @@ describe('AmqpModule', () => {
     const app = module.createNestApplication();
     await app.init();
 
-    const amqpConnection = module.get(createConnectionToken('default'));
+    const amqpConnection = module.get(createConnectionToken('first'));
 
     expect(amqpConnection).toBeInstanceOf(ChannelModel);
     await app.close();
@@ -80,7 +82,7 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot({
           hostname: process.env.HOST,
-          name: 'test',
+          name: 'test2',
           port: 5673,
           username: 'user',
           password: 'pass',
@@ -92,7 +94,7 @@ describe('AmqpModule', () => {
     const app = module.createNestApplication();
     await app.init();
 
-    const amqpConnectionTest = module.get(createConnectionToken('test'));
+    const amqpConnectionTest = module.get(createConnectionToken('test2'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
     await app.close();
@@ -107,6 +109,7 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
+          name: 'subModule',
           hostname: process.env.HOST,
           retrys: 1,
         }),
@@ -119,7 +122,7 @@ describe('AmqpModule', () => {
 
     const provider = module
       .select<SubModule>(SubModule)
-      .get(createConnectionToken('default'));
+      .get(createConnectionToken('subModule'));
 
     expect(provider).toBeInstanceOf(ChannelModel);
     await app.close();
