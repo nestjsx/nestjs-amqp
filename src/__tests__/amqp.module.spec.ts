@@ -18,9 +18,14 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpModule = module.get(AmqpModule);
 
     expect(amqpModule).toBeInstanceOf(AmqpModule);
+
+    await app.close();
   });
 
   it('Instace Amqp Connection provider', async () => {
@@ -33,9 +38,13 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpConnection = module.get(createConnectionToken('default'));
 
     expect(amqpConnection).toBeInstanceOf(ChannelModel);
+    await app.close();
   });
 
   it('Multiple connection options', async () => {
@@ -55,11 +64,15 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpConnectionTest = module.get(createConnectionToken('test'));
     const amqpConnection1 = module.get(createConnectionToken('1'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
     expect(amqpConnection1).toBeInstanceOf(ChannelModel);
+    await app.close();
   });
 
   it('Connection options', async () => {
@@ -76,9 +89,13 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const amqpConnectionTest = module.get(createConnectionToken('test'));
 
     expect(amqpConnectionTest).toBeInstanceOf(ChannelModel);
+    await app.close();
   });
 
   it('Connection available in submodule', async () => {
@@ -97,11 +114,15 @@ describe('AmqpModule', () => {
       ],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module
       .select<SubModule>(SubModule)
       .get(createConnectionToken('default'));
 
     expect(provider).toBeInstanceOf(ChannelModel);
+    await app.close();
   });
 
   it('Connections should build with AmqpAsyncOptionsInterface', async () => {
@@ -126,8 +147,12 @@ describe('AmqpModule', () => {
       providers: [TestProvider],
     }).compile();
 
+    const app = module.createNestApplication();
+    await app.init();
+
     const provider = module.get(TestProvider);
 
     expect(provider.getAmqp()).toBeInstanceOf(ChannelModel);
+    await app.close();
   });
 });

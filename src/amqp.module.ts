@@ -112,7 +112,7 @@ export default class AmqpModule implements OnModuleDestroy {
   async onModuleDestroy(): Promise<void> {
     AmqpModule.connectionNames.forEach(async connectionName => {
       const connection = this.moduleRef.get<amqp.Channel>(connectionName);
-      await connection.close();
+      connection !== null && connection.close();
     });
   }
 }
