@@ -135,7 +135,7 @@ Name | For | Default
 --- | --- | ---
 hostname | The host url for the connection | `localhost`
 port | The port of the amqp host | `5672`
-name | The name of the connection | `default` or the array key
+name | The name of the connection | `default` or the array key index `[0]`
 retrys | The amount of retry attempts before surrender | 3
 retryDelay | The amount of milliseconds to wait before attempting retry | 3000
 protocol | The protocol for the connection | `amqp`
@@ -146,7 +146,7 @@ frameMax | The size in bytes of the maximum frame allowed over the connection | 
 heartbeat | The period of the connection heartbeat in seconds | 0
 vhost | What VHost shall be used | `/`
 
-## Tetsing this package
+## Testing this package
 
 In order to test first you need to start the rabbitmq container. We've provided a `docker-compose` file to make this easier.
 
@@ -160,7 +160,7 @@ $ yarn test
 
 ## Future implementation
 
-So far this package manages multiple AMQP connections using the nestjs container and inject them into other providers.  
+So far this package manages multiple AMQP connections using the nestjs container and injects them into other providers.  
 Alternatively I'd like to implement something like this:
 
 ```javascript
