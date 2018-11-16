@@ -34,7 +34,7 @@ import {AmqpModule} from 'nestjs-amqp';
     password: 'test',
   })],
 })
-export default AppModule {}
+export default class AppModule {}
 
 ```
 
@@ -55,7 +55,7 @@ import * as path from 'path';
     }),
   ],
 })
-export default AppModule {}
+export default class AppModule {}
 
 //src/config/amqp.ts
 export default {
@@ -98,7 +98,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectAmqpConnection} from 'nestjs-amqp';
 
 @Injectable()
-export default TestService {
+export default class TestService {
   constructor(
     @InjectAmqpConnection('test') private readonly connectionTest, //gets connection with name 'test' defined in module
     @InjectAmqpConnection(0) private readonly connection0, //gets first defined connection without a name
@@ -114,7 +114,7 @@ import {Injectable, Logger} from '@nestjs/common';
 import {InjectAmqpConnection} from 'nestjs-amqp';
 
 @Injectable()
-export default TestProvider {
+export default class TestProvider {
   constructor(@InjectAmqpConnection() private readonly amqp) {}
   async publish(message: string)  {
     await this.amqp.createChannel((err, channel) => {
