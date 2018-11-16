@@ -74,7 +74,7 @@ export default {
 import {Module} from '@nestjs/common';
 import {AmqpModule} from 'nestjs-amqp';
 
-@module({
+@Module({
   imports: [AmqpModule.forRoot([
     {
       hostname: 'test:test@localhost',
