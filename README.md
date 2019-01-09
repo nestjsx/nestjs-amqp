@@ -160,10 +160,10 @@ $ yarn test
 
 ## Future implementation
 
+> PLEASE NOTE: The below examples have not been implemented 
+
 So far this package manages multiple AMQP connections using the nestjs container and injects them into other providers.  
 Alternatively I'd like to implement something like this:
-
-> The below examples have not been implemented 
 
 ```ts
 import {Injectable} from '@nestjs/common';
