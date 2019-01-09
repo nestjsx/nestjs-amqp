@@ -163,7 +163,9 @@ $ yarn test
 So far this package manages multiple AMQP connections using the nestjs container and injects them into other providers.  
 Alternatively I'd like to implement something like this:
 
-```javascript
+> The below examples have not been implemented 
+
+```ts
 import {Injectable} from '@nestjs/common';
 import {
   AmqpConnection,
@@ -195,7 +197,7 @@ export default class MyAmqpService {
 
 Then using executable context 
 
-```javascript 
+```ts 
 
 import { NestFactory } from '@nestjs/core';
 import QueueModule, { MyAmqpService } from './queue';
