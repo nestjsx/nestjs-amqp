@@ -1,5 +1,5 @@
 import AmqpAsyncOptionsInterface from './amqp.options';
 
-export default interface AmqpOptionsObjectInterface {
+export interface AmqpOptionsObjectInterface {
   [key: string]: AmqpAsyncOptionsInterface;
 }

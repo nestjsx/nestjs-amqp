@@ -1,6 +1,6 @@
 import { Options } from 'amqplib';
 
-export default interface AmqpOptionsInterface extends Options.Connect {
+export interface AmqpOptionsInterface extends Partial<Options.Connect> {
   name?: string;
   retrys?: number;
   retryDelay?: number;

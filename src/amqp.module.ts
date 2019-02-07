@@ -8,7 +8,7 @@ import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
 import { ModuleRef } from '@nestjs/core';
 
 @Module({})
-export default class AmqpModule implements OnModuleDestroy {
+export class AmqpModule implements OnModuleDestroy {
   private static connectionNames: string[] = [];
 
   constructor(private readonly moduleRef: ModuleRef) {}
