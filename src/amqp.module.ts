@@ -88,7 +88,7 @@ export class AmqpModule implements OnModuleDestroy {
     return {
       provide: createConnectionToken(options.name),
       //TODO resolve host url: do I need to? Seems to work aready? Just verify
-      useFactory: async (config: AmqpOptionsObjectInterface) => await from(amqp.connect(config[options.name ? options.name : 'default'])).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
+      useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config[options.name ? options.name : 'default'])).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
       inject: [AMQP_OPTIONS_PROVIDER],
     };
   }
