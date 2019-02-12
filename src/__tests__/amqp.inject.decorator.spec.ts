@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Injectable } from '@nestjs/common';
-import AmqpModule from '../amqp.module';
+import { AmqpModule } from './../index';
 import { InjectAmqpConnection } from '../decorators';
 const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
 
