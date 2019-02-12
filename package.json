@@ -22,7 +22,7 @@
     "nestjs-config": "^1.2.3",
     "prettier": "^1.13.7",
     "ts-jest": "^23.0.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.3.3"
   },
   "peerDependencies": {
     "@nestjs/common": "^5.1.0"
