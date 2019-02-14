@@ -15,6 +15,8 @@ This package was intented to be used in execution content and provides a basic A
 
 ## Install
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nestjs-community/nestjs-amqp.svg)](https://greenkeeper.io/)
+
 ```bash
 $ yarn add nestjs-amqp
 ```
