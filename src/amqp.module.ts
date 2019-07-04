@@ -114,5 +114,7 @@ export class AmqpModule implements OnModuleDestroy {
       const connection = this.moduleRef.get<amqp.Channel>(connectionName);
       connection !== null && await connection.close();
     });
+
+    AmqpModule.connectionNames = [];
   }
 }
