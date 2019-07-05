@@ -1,9 +1,9 @@
 <p align="center"><img src="https://avatars1.githubusercontent.com/u/41109786?s=200&v=4"/></p>
 <p align="center">
-    <a href="https://travis-ci.org/nestjs-community/nestjs-amqp"><img src="https://travis-ci.org/nestjs-community/nestjs-amqp.svg?branch=master"/></a>
+    <a href="https://travis-ci.org/nestjsx/nestjs-amqp"><img src="https://travis-ci.org/nestjsx/nestjs-amqp.svg?branch=master"/></a>
     <a href="https://www.npmjs.com/package/nestjs-amqp"><img src="https://img.shields.io/npm/v/nestjs-amqp.svg"/></a>
-    <a href="https://github.com/nestjs-community/nestjs-amqp/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nestjs-community/nestjs-amqp.svg"/></a>
-    <a href="https://coveralls.io/github/nestjs-community/nestjs-amqp?branch=master"><img src="https://coveralls.io/repos/github/nestjs-community/nestjs-amqp/badge.svg?branch=master"/></a>
+    <a href="https://github.com/nestjsx/nestjs-amqp/blob/master/LICENSE"><img src="https://img.shields.io/github/license/nestjsx/nestjs-amqp.svg"/></a>
+    <a href="https://coveralls.io/github/nestjsx/nestjs-amqp?branch=master"><img src="https://coveralls.io/repos/github/nestjsx/nestjs-amqp/badge.svg?branch=master"/></a>
 </p>
 
 
