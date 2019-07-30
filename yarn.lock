@@ -156,9 +156,9 @@ ajv@^6.5.5:
     uri-js "^4.2.2"
 
 amqplib@^0.5.2:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.5.3.tgz#7ccfc85d12ee7cd3c6dc861bb07f0648ec3d7193"
-  integrity sha512-ZOdUhMxcF+u62rPI+hMtU1NBXSDFQ3eCJJrenamtdQ7YYwh7RZJHOIM1gonVbZ5PyVdYH4xqBPje9OYqk7fnqw==
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.5.4.tgz#3fa9f1ec569f7da97caa579d51187ee75758ea51"
+  integrity sha512-kl7tAGUV57f67pUcSZ12NbfbzaeejQxab0antU3U7gMG3/LCqzM5bqpzYKEsgwfHRDjDyY98Wmyk2dU4qQhffg==
   dependencies:
     bitsyntax "~0.1.0"
     bluebird "^3.5.2"
