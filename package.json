@@ -6,7 +6,7 @@
     "amqp"
   ],
   "main": "dist/index.js",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "devDependencies": {
     "@nestjs/common": "^6.4.1",
