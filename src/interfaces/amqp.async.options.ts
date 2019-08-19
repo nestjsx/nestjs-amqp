@@ -4,7 +4,7 @@ export interface AmqpAsyncOptionsInterface {
   inject?: any[];
   useFactory?: (
     ...args: any[]
-  ) => Promise<AmqpOptionsInterface> | AmqpAsyncOptionsInterface;
+  ) => Promise<AmqpOptionsInterface> | AmqpOptionsInterface;
   retrys?: number;
   retryDelay?: number;
 }
