@@ -40,9 +40,9 @@
     uuid "3.3.3"
 
 "@nestjs/platform-express@^6.4.1":
-  version "6.6.3"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.6.3.tgz#6d48eeedc6ab518321fbe33ed3be632ac9c9fe35"
-  integrity sha512-Lyc7gSKh5XNnlNNSO8L9WFboVWK46fW0om0x24KZBH/mGrdPvOtW2hvTZNXoj6wBkHn0TyNMf382SR6lFEykYA==
+  version "6.6.4"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.6.4.tgz#0b60dc2c769433878897e2a0cc34539e4e51711a"
+  integrity sha512-515LetaR4XEphV+ybJ7fbZtksraCibR7hw2SRHHqbTsmPq1UhMwVnNq+1VhLemY02Eh65LiOOAQod07nOPwyXA==
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
