@@ -1,4 +1,4 @@
-import {Module, DynamicModule, Provider, OnModuleDestroy} from '@nestjs/common';
+import {Module, DynamicModule, Provider, OnModuleDestroy, Global} from '@nestjs/common';
 import { AmqpOptionsInterface, AmqpAsyncOptionsInterface, AmqpOptionsObjectInterface } from './interfaces';
 import { createConnectionToken, createOptionsToken } from './utils/create.tokens';
 import {from} from 'rxjs';
@@ -6,6 +6,52 @@ import * as amqp from 'amqplib';
 import retry from './utils/retry';
 import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
 import { ModuleRef } from '@nestjs/core';
+
+@Global()
+@Module({})
+class AmqpCoreModule implements OnModuleDestroy {
+  private static connectionNames: string[] = [];
+
+  constructor(private readonly moduleRef: ModuleRef) {}
+
+  public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
+
+    AmqpCoreModule.connectionNames.push(createConnectionToken('default'));
+
+    const connectionProviders = [
+      {
+        provide: createConnectionToken('default'),
+        useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
+        inject: [createOptionsToken('default')],
+      },
+    ];
+
+    return {
+      module: AmqpCoreModule,
+      providers: [
+        ...connectionProviders,
+        {
+          provide: createOptionsToken('default'),
+          useFactory: options.useFactory,
+          inject: options.inject || [],
+        },
+      ],
+      exports: [
+        ...connectionProviders,
+      ],
+    };
+  }
+
+  async onModuleDestroy(): Promise<void> {
+    AmqpCoreModule.connectionNames.forEach(async connectionName => {
+      const connection = this.moduleRef.get<amqp.Channel>(connectionName);
+      connection !== null && await connection.close();
+    });
+
+    AmqpCoreModule.connectionNames = [];
+  }
+}
+
 
 @Module({})
 export class AmqpModule implements OnModuleDestroy {
@@ -43,28 +89,10 @@ export class AmqpModule implements OnModuleDestroy {
   }
 
   public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
-    
-    AmqpModule.connectionNames.push(createConnectionToken('default'));
-
-    const connectionProviders = [
-      {
-        provide: createConnectionToken('default'),
-        useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
-        inject: [createOptionsToken('default')],
-      },
-    ];
 
     return {
       module: AmqpModule,
-      providers: [
-        {
-          provide: createOptionsToken('default'),
-          useFactory: options.useFactory,
-          inject: options.inject || [],
-        },
-        ...connectionProviders,
-      ],
-      exports: connectionProviders,
+      imports: [AmqpCoreModule.forRootAsync(options)],
     };
   }
 
