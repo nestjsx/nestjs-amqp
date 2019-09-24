@@ -27,7 +27,7 @@ export class AmqpModule implements OnModuleDestroy {
       connectionProviders.push(this.createConnectionProvider(options));
     });
 
-    this.providers.concat(optionsProviders).concat(connectionProviders);
+    AmqpModule.providers.concat(optionsProviders).concat(connectionProviders);
 
     return {
       module: AmqpModule,
@@ -42,8 +42,8 @@ export class AmqpModule implements OnModuleDestroy {
   public static forFeature(): DynamicModule {
     return {
       module: AmqpModule,
-      providers: this.providers,
-      exports: this.providers,
+      providers: AmqpModule.providers,
+      exports: AmqpModule.providers,
     };
   }
 
@@ -59,7 +59,7 @@ export class AmqpModule implements OnModuleDestroy {
       },
     ];
 
-    this.providers.concat(connectionProviders).push({
+    AmqpModule.providers.concat(connectionProviders).push({
       provide: createOptionsToken('default'),
       useFactory: options.useFactory,
       inject: options.inject || [],
