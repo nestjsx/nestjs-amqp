@@ -39,6 +39,9 @@ export class AmqpModule implements OnModuleDestroy {
   public static forFeature(): DynamicModule {
     return {
       module: AmqpModule,
+      exports: [
+        createConnectionToken('default'),
+      ],
     };
   }
 
