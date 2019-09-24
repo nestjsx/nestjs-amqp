@@ -10,7 +10,6 @@ import { ModuleRef } from '@nestjs/core';
 @Module({})
 export class AmqpModule implements OnModuleDestroy {
   private static connectionNames: string[] = [];
-  private static providers: Provider[];
 
   constructor(private readonly moduleRef: ModuleRef) {}
 
@@ -27,8 +26,6 @@ export class AmqpModule implements OnModuleDestroy {
       connectionProviders.push(this.createConnectionProvider(options));
     });
 
-    AmqpModule.providers = connectionProviders;
-
     return {
       module: AmqpModule,
       providers: [
@@ -42,8 +39,6 @@ export class AmqpModule implements OnModuleDestroy {
   public static forFeature(): DynamicModule {
     return {
       module: AmqpModule,
-      providers: AmqpModule.providers || [],
-      exports: AmqpModule.providers || [],
     };
   }
 
@@ -56,15 +51,6 @@ export class AmqpModule implements OnModuleDestroy {
         provide: createConnectionToken('default'),
         useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
         inject: [createOptionsToken('default')],
-      },
-    ];
-
-    AmqpModule.providers = [
-      ...connectionProviders,
-      {
-        provide: createOptionsToken('default'),
-        useFactory: options.useFactory,
-        inject: options.inject || [],
       },
     ];
 
