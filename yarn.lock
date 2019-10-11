@@ -324,9 +324,9 @@
     multer "1.4.2"
 
 "@nestjs/testing@^6.4.1":
-  version "6.6.7"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.6.7.tgz#ee6df8b3cc1857dba037bbf4ac861b2fbc3bc266"
-  integrity sha512-SKP1aTnTKTKbzL7QqiVmQC3EEZH7javf67GZMuFkIJ5hVCEuc6FEdfV9iyCGH6hC/68ArCa8U8jbxt9+CbyPew==
+  version "6.8.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.8.3.tgz#457bedec42a3de13c0c436b85c987e35e47fe22e"
+  integrity sha512-nhiXfvnfJ0ARzpOJ+7btnHBxTh82oQX6+/G7EnQEBB/A1jFfE+sbB7Pdt6s999prNOQmdw/XdnORV67u9BwNkw==
   dependencies:
     optional "0.1.4"
 
