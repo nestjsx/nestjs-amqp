@@ -12,7 +12,7 @@
     "@nestjs/common": "^6.4.1",
     "@nestjs/core": "^6.4.1",
     "@nestjs/platform-express": "^6.4.1",
-    "@nestjs/testing": "^6.4.1",
+    "@nestjs/testing": "^7.0.0",
     "@types/amqplib": "^0.5.8",
     "@types/es6-promise": "^3.3.0",
     "@types/jest": "^24.0.15",
