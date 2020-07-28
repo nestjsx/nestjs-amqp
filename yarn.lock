@@ -2897,9 +2897,9 @@ neo-async@^2.6.0:
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
 nestjs-config@^1.2.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/nestjs-config/-/nestjs-config-1.4.4.tgz#d73bb4d034ad76f4b8ced474fb1c7e37751c2c98"
-  integrity sha512-dlcViMWQ9j9BaIPH3AKXQXsxwFkW9LeUIv1Be/qkTRCVNuV9Kn3++m+NFJSkNQmVDdsGxkmc5iDRijuHSXJPUg==
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/nestjs-config/-/nestjs-config-1.4.7.tgz#901046598c8e4dbd98783caf7bf4cd096484c252"
+  integrity sha512-lD/tW5UZ3J+awJSUOjjCjJ6QwXVoJBYuigDJONQj4FETxImPLeB30Brxgt6ZyGX8o3BvA5osDdNfYO2iKQUXRQ==
   dependencies:
     dotenv "^8.0.0"
     glob "^7.1.2"
