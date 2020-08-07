@@ -1,4 +1,4 @@
-import retry from '../utils/retry';
+import retry from './retry';
 import { from } from 'rxjs';
 import * as amqp from 'amqplib';
 

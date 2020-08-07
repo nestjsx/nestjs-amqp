@@ -6,45 +6,40 @@
     "amqp"
   ],
   "main": "dist/index.js",
-  "version": "0.1.9",
+  "author": {
+    "name": "sawakaga",
+    "url": "https://github.com/sawakaga",
+    "email": "mrtanilgrn@gmail.com"
+  },
+  "version": "0.2.0",
   "license": "MIT",
   "devDependencies": {
-    "@nestjs/common": "^6.4.1",
-    "@nestjs/core": "^6.4.1",
-    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/common": "^7.4.2",
+    "@nestjs/core": "^7.4.2",
     "@nestjs/testing": "^7.0.0",
     "@types/amqplib": "^0.5.13",
-    "@types/es6-promise": "^3.3.0",
     "@types/jest": "^24.0.15",
     "@types/node": "^14.0.26",
-    "coveralls": "^3.0.2",
-    "dotenv": "^8.0.0",
-    "jest": "^24.9.0",
-    "nestjs-config": "^1.2.3",
+    "jest": "^26.2.2",
     "prettier": "^1.13.7",
-    "ts-jest": "^24.0.2",
+    "ts-jest": "^26.1.4",
     "typescript": "^3.3.3"
   },
-  "peerDependencies": {
-    "@nestjs/common": "^5.1.0 || ^6.0.3",
-    "@types/amqplib": "^0.5.13"
-  },
   "dependencies": {
-    "amqplib": "^0.5.2",
+    "amqplib": "^0.5.6",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
   },
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "coverage": "jest --coverage",
-    "coveralls": "yarn run coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest",
     "format": "prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
     "prepublish": "npm run format && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nestjs-community/nestjs-amqp.git"
+    "url": "https://github.com/sawakaga/nestjs-amqp.git"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -57,9 +52,6 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "./coverage",
-    "setupFiles": [
-      "<rootDir>/__tests__/setup.js"
-    ]
+    "coverageDirectory": "./coverage"
   }
 }

@@ -1,27 +1,20 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "declaration": true,
-      "noImplicitAny": false,
-      "noUnusedLocals": false,
-      "removeComments": false,
-      "noLib": false,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "target": "es6",
-      "sourceMap": false,
-      "allowJs": false,
-      "rootDir": "./src",
-      "baseUrl": "./",
-      "outDir": "./dist"
-    },
-    "include": [
-      "*.ts",
-      "**/*.ts"
-    ],
-    "exclude": [
-      "node_modules",
-      "./**/*.spec.ts",
-      "examples"
-    ]
-  }
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "removeComments": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "esNext",
+    "sourceMap": false,
+    "allowJs": false,
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "outDir": "./dist"
+  },
+  "include": ["*.ts", "**/*.ts"],
+  "exclude": ["node_modules", "./**/*.spec.ts", "dist"]
+}
