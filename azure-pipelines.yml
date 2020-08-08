@@ -20,8 +20,6 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: Npm@1
-  inputs:
-    command: 'publish'
-    publishRegistry: 'useFeed'
-    publishFeed: '72ed02bb-e67c-4d94-9928-b6a09f59472d'
+- script:  |
+    npm run test
+  displayName: 'jest test'
