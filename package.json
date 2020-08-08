@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-amqp",
+  "name": "@sawakaga/nestjs-amqplib",
   "description": "AMQP connection service for nestjs",
   "keywords": [
     "nestjs",
