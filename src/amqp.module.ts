@@ -1,10 +1,22 @@
-import {Module, DynamicModule, Provider, OnModuleDestroy} from '@nestjs/common';
-import { AmqpOptionsInterface, AmqpAsyncOptionsInterface, AmqpOptionsObjectInterface } from './interfaces';
-import { createConnectionToken, createOptionsToken } from './utils/create.tokens';
-import {from} from 'rxjs';
+import {
+  Module,
+  DynamicModule,
+  Provider,
+  OnModuleDestroy,
+} from '@nestjs/common';
+import {
+  AmqpOptionsInterface,
+  AmqpAsyncOptionsInterface,
+  AmqpOptionsObjectInterface,
+} from './interfaces';
+import {
+  createConnectionToken,
+  createOptionsToken,
+} from './utils/create.tokens';
+import { from } from 'rxjs';
 import * as amqp from 'amqplib';
 import retry from './utils/retry';
-import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
+import { AMQP_OPTIONS_PROVIDER } from './amqp.constants';
 import { ModuleRef } from '@nestjs/core';
 
 @Module({})
@@ -13,8 +25,9 @@ export class AmqpModule implements OnModuleDestroy {
 
   constructor(private readonly moduleRef: ModuleRef) {}
 
-  public static forRoot(options: AmqpOptionsInterface | AmqpOptionsInterface[]): DynamicModule {
-
+  public static forRoot(
+    options: AmqpOptionsInterface | AmqpOptionsInterface[],
+  ): DynamicModule {
     const optionsProviders: Provider[] = [];
     const connectionProviders: Provider[] = [];
 
@@ -22,16 +35,13 @@ export class AmqpModule implements OnModuleDestroy {
 
     optionsProviders.push(this.createOptionsProvider(options));
 
-    options.forEach(options => {  
+    options.forEach((options) => {
       connectionProviders.push(this.createConnectionProvider(options));
     });
 
     return {
       module: AmqpModule,
-      providers: [
-        ...optionsProviders,
-        ...connectionProviders,
-      ],
+      providers: [...optionsProviders, ...connectionProviders],
       exports: connectionProviders,
     };
   }
@@ -42,14 +52,18 @@ export class AmqpModule implements OnModuleDestroy {
     };
   }
 
-  public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
-    
+  public static forRootAsync(
+    options: AmqpAsyncOptionsInterface,
+  ): DynamicModule {
     AmqpModule.connectionNames.push(createConnectionToken('default'));
 
     const connectionProviders = [
       {
         provide: createConnectionToken('default'),
-        useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config)).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
+        useFactory: async (config: AmqpOptionsInterface) =>
+          await from(amqp.connect(config))
+            .pipe(retry(options.retries, options.retryDelay))
+            .toPromise(),
         inject: [createOptionsToken('default')],
       },
     ];
@@ -68,7 +82,9 @@ export class AmqpModule implements OnModuleDestroy {
     };
   }
 
-  private static createOptionsProvider(options: AmqpOptionsInterface[]): Provider {
+  private static createOptionsProvider(
+    options: AmqpOptionsInterface[],
+  ): Provider {
     const optionsObject: AmqpOptionsObjectInterface = {};
 
     if (Array.isArray(options)) {
@@ -83,18 +99,28 @@ export class AmqpModule implements OnModuleDestroy {
     };
   }
 
-  private static createConnectionProvider(options: AmqpOptionsInterface): Provider {
+  private static createConnectionProvider(
+    options: AmqpOptionsInterface,
+  ): Provider {
     AmqpModule.connectionNames.push(createConnectionToken(options.name));
     return {
       provide: createConnectionToken(options.name),
       //TODO resolve host url: do I need to? Seems to work aready? Just verify
-      useFactory: async (config: AmqpOptionsInterface) => await from(amqp.connect(config[options.name ? options.name : 'default'])).pipe(retry(options.retrys, options.retryDelay)).toPromise(),
+      useFactory: async (config: AmqpOptionsInterface) =>
+        await from(
+          amqp.connect(config[options.name ? options.name : 'default']),
+        )
+          .pipe(retry(options.retries, options.retryDelay))
+          .toPromise(),
       inject: [AMQP_OPTIONS_PROVIDER],
     };
   }
 
-  private static resolveOptions(options: AmqpOptionsInterface|AmqpOptionsInterface[]): AmqpOptionsInterface[] {
-    if (!Array.isArray(options) && !options.hasOwnProperty('name')) options.name = 'default';
+  private static resolveOptions(
+    options: AmqpOptionsInterface | AmqpOptionsInterface[],
+  ): AmqpOptionsInterface[] {
+    if (!Array.isArray(options) && !options.hasOwnProperty('name'))
+      options.name = 'default';
 
     if (!Array.isArray(options)) {
       options = [options];
@@ -110,9 +136,9 @@ export class AmqpModule implements OnModuleDestroy {
   }
 
   async onModuleDestroy(): Promise<void> {
-    AmqpModule.connectionNames.forEach(async connectionName => {
+    AmqpModule.connectionNames.forEach(async (connectionName) => {
       const connection = this.moduleRef.get<amqp.Channel>(connectionName);
-      connection !== null && await connection.close();
+      connection !== null && (await connection.close());
     });
 
     AmqpModule.connectionNames = [];

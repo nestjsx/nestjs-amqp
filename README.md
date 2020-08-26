@@ -140,7 +140,7 @@ Name | For | Default
 hostname | The host url for the connection | `localhost`
 port | The port of the amqp host | `5672`
 name | The name of the connection | `default` or the array key index `[0]`
-retrys | The amount of retry attempts before surrender | 3
+retries | The amount of retry attempts before surrender | 3
 retryDelay | The amount of milliseconds to wait before attempting retry | 3000
 protocol | The protocol for the connection | `amqp`
 username | The username for the connection | 

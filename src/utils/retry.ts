@@ -8,7 +8,7 @@ export default function retry(
 ): <T>(source: Observable<T>) => Observable<T> {
   return <T>(source: Observable<T>) =>
     source.pipe(
-      retryWhen(e =>
+      retryWhen((e) =>
         e.pipe(
           scan((acc: number, error: Error) => {
             Logger.error(

@@ -19,7 +19,7 @@ describe('InjectAmqpConnection', () => {
       imports: [
         AmqpModule.forRoot({
           hostname: process.env.HOST,
-          retrys: 1,
+          retries: 1,
         }),
       ],
       providers: [TestProvider],
@@ -56,11 +56,11 @@ describe('InjectAmqpConnection', () => {
         AmqpModule.forRoot([
           {
             hostname: process.env.HOST,
-            retrys: 1,
+            retries: 1,
           },
           {
             hostname: process.env.HOST,
-            retrys: 1,
+            retries: 1,
           },
         ]),
       ],

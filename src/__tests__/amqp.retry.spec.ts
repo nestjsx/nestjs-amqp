@@ -5,7 +5,7 @@ import * as amqp from 'amqplib';
 jest.setTimeout(30000);
 
 describe('Amqp Retry', () => {
-  it('retrys are called', async () => {
+  it('retries are called', async () => {
     try {
       const result = await from(
         amqp.connect({

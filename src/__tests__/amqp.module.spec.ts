@@ -14,7 +14,7 @@ describe('AmqpModule', () => {
         AmqpModule.forRoot({
           name: 'instance',
           hostname: process.env.HOST,
-          retrys: 1,
+          retries: 1,
         }),
       ],
     }).compile();
@@ -29,13 +29,13 @@ describe('AmqpModule', () => {
     await app.close();
   });
 
-  it('Instace Amqp Connection provider', async () => {
+  it('Instance Amqp Connection provider', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
           name: 'first',
           hostname: process.env.HOST,
-          retrys: 1,
+          retries: 1,
         }),
       ],
     }).compile();
@@ -56,11 +56,11 @@ describe('AmqpModule', () => {
           {
             hostname: process.env.HOST,
             name: 'test',
-            retrys: 1,
+            retries: 1,
           },
           {
             hostname: process.env.HOST,
-            retrys: 1,
+            retries: 1,
           },
         ]),
       ],
@@ -86,7 +86,7 @@ describe('AmqpModule', () => {
           port: 5673,
           username: 'user',
           password: 'pass',
-          retrys: 1,
+          retries: 1,
         }),
       ],
     }).compile();
@@ -111,7 +111,7 @@ describe('AmqpModule', () => {
         AmqpModule.forRoot({
           name: 'subModule',
           hostname: process.env.HOST,
-          retrys: 1,
+          retries: 1,
         }),
         SubModule,
       ],
@@ -143,7 +143,7 @@ describe('AmqpModule', () => {
           path.resolve(__dirname, '__stubs__', 'config', '*.ts'),
         ),
         AmqpModule.forRootAsync({
-          useFactory: async config => config.get('amqp'),
+          useFactory: async (config) => config.get('amqp'),
           inject: [ConfigService],
         }),
       ],
