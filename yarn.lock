@@ -419,9 +419,9 @@
     jest-diff "^24.3.0"
 
 "@types/node@*", "@types/node@^14.0.26":
-  version "14.0.26"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.26.tgz#22a3b8a46510da8944b67bfc27df02c34a35331c"
-  integrity sha512-W+fpe5s91FBGE0pEa0lnqGLL4USgpLgs4nokw16SrBBco/gQxuua7KnArSEOd5iaMqbbSHV10vUDkJYJJqpXKA==
+  version "14.14.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.7.tgz#8ea1e8f8eae2430cf440564b98c6dfce1ec5945d"
+  integrity sha512-Zw1vhUSQZYw+7u5dAwNbIA9TuTotpzY/OF7sJM9FqPOF3SPjKnxrjoTktXDZgUjybf4cWVBP7O8wvKdSaGHweg==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
