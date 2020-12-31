@@ -21,6 +21,7 @@ This package was intented to be used in execution content and provides a basic A
 
 ```bash
 $ yarn add nestjs-amqp
+$ yarn add -D @types/amqplib
 ```
 
 ## Basic usage 
