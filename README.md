@@ -21,6 +21,7 @@ This package was intented to be used in execution content and provides a basic A
 
 ```bash
 $ yarn add nestjs-amqp
+$ yarn add -D @types/amqplib
 ```
 
 ## Basic usage 
@@ -100,12 +101,15 @@ export default class ExecutionModule {
 ```ts
 import {Injectable} from '@nestjs/common';
 import {InjectAmqpConnection} from 'nestjs-amqp';
+import {Connection} from 'amqplib';
 
 @Injectable()
 export default class TestService {
   constructor(
-    @InjectAmqpConnection('test') private readonly connectionTest, //gets connection with name 'test' defined in module
-    @InjectAmqpConnection(0) private readonly connection0, //gets first defined connection without a name
+    @InjectAmqpConnection('test')
+    private readonly connectionTest: Connection, //gets connection with name 'test' defined in module
+    @InjectAmqpConnection(0)
+    private readonly connection0: Connection, //gets first defined connection without a name
   ) {}
 }
 ```
@@ -116,10 +120,14 @@ export default class TestService {
 ```ts
 import {Injectable, Logger} from '@nestjs/common';
 import {InjectAmqpConnection} from 'nestjs-amqp';
+import {Connection} from 'amqplib';
 
 @Injectable()
 export default class TestProvider {
-  constructor(@InjectAmqpConnection() private readonly amqp) {}
+  constructor(
+    @InjectAmqpConnection()
+    private readonly amqp: Connection,
+  ) {}
   async publish(message: string)  {
     await this.amqp.createChannel((err, channel) => {
       if (err != null) {
