@@ -341,9 +341,9 @@
     node-fetch "^2.3.0"
 
 "@types/amqplib@^0.5.13":
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.5.13.tgz#a0dc9be08f38b91e5f7532acf0c89b0e515cdc6c"
-  integrity sha512-0r8cJfUajAlcHxlJsZyqRrSAYzv+pJPsaAQjDC6e5rACi3AOIuR0AfevJG7NLvw3Qu4EGhf3KS/ECwd5cUAY2A==
+  version "0.5.17"
+  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.5.17.tgz#1211f5e01b62006e8a380af258d147de0b3b22e0"
+  integrity sha512-RImqiLP1swDqWBW8UX9iBXVEOw6MYzNmxdXqfemDfdwtUvdTM/W0s2RlSuMVIGkRhaWvpkC9O/N81VzzQwfAbw==
   dependencies:
     "@types/bluebird" "*"
     "@types/node" "*"
