@@ -30,7 +30,7 @@
     "@types/amqplib": "^0.5.13"
   },
   "dependencies": {
-    "amqplib": "^0.6.0",
+    "amqplib": "^0.7.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
   },
