@@ -18,7 +18,7 @@
     "@types/jest": "^24.0.15",
     "@types/node": "^15.12.4",
     "coveralls": "^3.0.2",
-    "dotenv": "^8.0.0",
+    "dotenv": "^10.0.0",
     "jest": "^24.9.0",
     "nestjs-config": "^1.2.3",
     "prettier": "^1.13.7",
