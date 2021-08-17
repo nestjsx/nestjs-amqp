@@ -43,6 +43,7 @@ export default class AppModule {}
 
 ```
 
+## Advanced usage
 ### Usage with nestjs-config
 
 ```ts
@@ -73,7 +74,24 @@ export default {
 ```
 > Unfortunately multiple connections are unavailable when using the `forRootAsync` method.
 
-## Connection Decorators
+### Usage in custom provider
+It is possible to inject the AmqpConnection in a factory of a custom provider if one needs such capability. 
+
+
+```ts
+import { Connection as AmqpConnection } from 'amqplib';
+import {ConfigService} from 'nestjs-config';
+import {createConnectionToken} from 'nestjs-amqp/utils';
+
+export const queueServiceProvider = {
+    provider: 'QueueService',
+    useFactory: (amqp: AmqpConnection, configService: ConfigService) => new QueueService(amqp, config.get('queue')),
+    inject: [createConnectionToken('default'), ConfigService],
+}
+```
+
+It's also possible to give your connections names, if you have done so then use the name of your connection instead of ``default``.
+### Connection Decorators
 
 ```ts
 import {Module} from '@nestjs/common';
