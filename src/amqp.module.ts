@@ -64,6 +64,7 @@ export class AmqpModule implements OnModuleDestroy {
         },
         ...connectionProviders,
       ],
+      imports: options.imports,
       exports: connectionProviders,
     };
   }
