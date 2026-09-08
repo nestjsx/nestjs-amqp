@@ -400,8 +400,9 @@
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.24.tgz#11f76812531c14f793b8ecbf1de96f672905de8a"
 
 "@types/es6-promise@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@types/es6-promise/-/es6-promise-3.3.0.tgz#61b55e554fd807b563f158a7986ee53d3a5a5a9d"
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@types/es6-promise/-/es6-promise-3.3.2.tgz#fb212287024dc3c76229c62c002881b723ded5fa"
+  integrity sha512-yQXJjv7BbVWUDjrVpPdWuRmolhiaUKk3lVwzQtKbegVnd2AkINTY/aWMh87s7wE9sZ0Qfd/17sV6aeJET7OY3w==
   dependencies:
     es6-promise "*"
 
