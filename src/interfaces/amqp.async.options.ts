@@ -1,6 +1,7 @@
 import { AmqpOptionsInterface } from './amqp.options';
+import { ModuleMetadata } from '@nestjs/common/interfaces';
 
-export interface AmqpAsyncOptionsInterface {
+export interface AmqpAsyncOptionsInterface extends Pick<ModuleMetadata, 'imports'> {
   inject?: any[];
   useFactory?: (
     ...args: any[]
